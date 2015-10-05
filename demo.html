@@ -14,35 +14,29 @@
   </body>
 </html>
 
-<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../firebase-element/firebase-collection.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
 
 <dom-module id="card-item">
   <template>
-
     <style>
       :host {
-        display: block;
-        box-sizing: border-box;
-        min-height: 50px;
+        display: block; box-sizing: border-box; min-height: 50px;
       }
       .row {
-        position: relative;
-        padding: 16px 16px 16px 22px;
+        position: relative; padding: 16px 16px 16px 22px;
       }
       paper-checkbox {
-        /* Checkbox has 8px of extra space on top so have to tweak it to center */
-        margin-top: -4px;
-        margin-right: 20px;
+        margin-top: -4px; margin-right: 20px;
       }
       paper-checkbox[checked] + .label {
-        color: #9E9E9E;
-        text-decoration: line-through;
+        color: #9E9E9E; text-decoration: line-through;
       }
     </style>
     <paper-material class="row layout horizontal center">
