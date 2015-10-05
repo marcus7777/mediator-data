@@ -44,23 +44,8 @@
         color: #9E9E9E;
         text-decoration: line-through;
       }
-      paper-input {
-        margin-top: -4px;
-          --paper-input-container-input: {
-          font-family: 'Roboto Slab';
-          font-size: 20px;
-          text-overflow: ellipsis;
-        };
-          --paper-input-container-underline: {
-          background: transparent;
-        };
-      }
     </style>
     <paper-material class="row layout horizontal center">
-
-      <!-- Note the use of $= for aria-labelledby. This is because there's
-      no corresponding js property so we need to write a literal attribute
-      value, which is what $= does. -->
       <paper-checkbox id="checkbox"
                       checked="{{card.isComplete}}"
                       aria-labelledby$="[[_computeLabelId(card.uid)]]"></paper-checkbox>
@@ -97,9 +82,7 @@
   });
 </script>
 <dom-module id="card-view">
-
   <template>
-    <style is="custom-style" include="app-theme"></style>
     <style>
       :host {
         display: block;
