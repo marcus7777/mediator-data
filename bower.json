@@ -1,0 +1,20 @@
+{
+  "name": "mediator-data bower file",
+  "version": "1.0.0",
+  "homepage": "https://github.com/marcus7777/mediator-data",
+  "authors": [
+    "mywoisme <mywoisme@gmail.com>"
+  ],
+  "description": "All the dependecies that this element needs",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0"
+  }
+}
