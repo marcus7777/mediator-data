@@ -6,7 +6,95 @@
     <link rel="import" href="mediator-data.html">
   </head>
   <body>
+    
     <h3>mediator-data Demo</h3>
-    <mediator-data data="{{data}}" location="https://mediator-data.firebaseio-demo.com" type="firebase"></mediator-data>
+      <template is="dom-bind">
+        <mediator-data data="{{data}}" location="https://mediator-data.firebaseio-demo.com" type="firebase"></mediator-data>
+        <template is="dom-repeat" items="{{data}}">
+          <card-item card="{{card}}"></card-item>
+        </template>
+      </template>
   </body>
 </html>
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../paper-material/paper-material.html">
+
+<dom-module id="card-item">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        min-height: 50px;
+      }
+      .row {
+        position: relative;
+        padding: 16px 16px 16px 22px;
+      }
+      paper-checkbox {
+        /* Checkbox has 8px of extra space on top so have to tweak it to center */
+        margin-top: -4px;
+        margin-right: 20px;
+      }
+      paper-checkbox[checked] + .label {
+        color: #9E9E9E;
+        text-decoration: line-through;
+      }
+      paper-input {
+        margin-top: -4px;
+        --paper-input-container-input: {
+          font-family: 'Roboto Slab';
+          font-size: 20px;
+          text-overflow: ellipsis;
+        };
+        --paper-input-container-underline: {
+          background: transparent;
+        };
+      }
+    </style>
+    <paper-material class="row layout horizontal center">
+
+      <!-- Note the use of $= for aria-labelledby. This is because there's
+      no corresponding js property so we need to write a literal attribute
+      value, which is what $= does. -->
+      <paper-checkbox id="checkbox"
+                      checked="{{card.isComplete}}"
+                      aria-labelledby$="[[_computeLabelId(card.uid)]]"></paper-checkbox>
+
+      <paper-input id="[[_computeLabelId(card.uid)]]"
+                   class="flex"
+                   value="{{card.label}}"
+                   no-label-float
+                   on-keypress="_checkConfirmation"></paper-input>
+
+      <paper-icon-button icon="delete"
+                         class="btn-cancel"
+                         aria-label="Delete Card"
+                         tabindex="0"
+                         on-tap="_onDelete">
+      </paper-icon-button>
+    </paper-material>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'card-item',
+    properties: {
+      favorite: {
+        type: Boolean, value: false, notify: true
+      }
+    },
+    _computeLabelId: function(uid) {
+      return 'cardItemLabel-' + uid;
+    },
+    _onDelete: function() {
+      this.fire('delete-card', {card: this.card});
+    }
+  });
+</script>
