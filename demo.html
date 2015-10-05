@@ -194,3 +194,79 @@
     }
   });
 </script>
+<dom-module id="card-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .input-wrapper {
+        padding-left: 70px;
+      }
+      paper-input {
+        display: inline-block;
+        width: 65%;
+        --paper-input-container: {
+          padding-bottom: 0;
+        };
+        /* These styles are not DRY :( */
+        --paper-input-container-label: {
+          font-size: 20px;
+          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+          font-weight: normal;
+          color: #9E9E9E;
+        };
+        --paper-input-container-input: {
+          font-size: 20px;
+          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        };
+        --paper-input-container-underline: {
+          top: 7px;
+          background: #9E9E9E;
+        };
+        --paper-input-container-underline-focus: {
+          top: 7px;
+        };
+      }
+      paper-input[focused] + paper-button,
+      paper-button[focused] {
+        background: var(--default-primary-color);
+        color: var(--text-primary-color);
+      }
+      paper-button {
+        background: #E0E0E0;
+        color: #9E9E9E;
+        font-size: 14px;
+      }
+      paper-button[focused] {
+        /* https://github.com/PolymerElements/paper-button/pull/43 */
+        outline-width: 3px;
+      }
+    </style>
+    <div class="input-wrapper">
+      <paper-input id="cardInput"
+                   no-label-float
+                   label="Add a Card"
+                   on-keydown="_checkAdd">
+      </paper-input>
+      <paper-button on-tap="_add">Add</paper-button>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'card-input',
+    // Listen for ENTER key
+    _checkAdd: function(e) {
+      if (e.keyCode === 13) {
+        this._add();
+      }
+    },
+    _add: function() {
+      if (this.$.cardInput.value) {
+        this.fire('add-card', {value: this.$.cardInput.value});
+        this.$.cardInput.value = null;
+      }
+    }
+  });
+</script>
