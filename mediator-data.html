@@ -20,6 +20,26 @@
 </dom-module>
 <script>
   Polymer({
-    is: "mediator-data"
+    is: "mediator-data",
+    properties: {
+      cards: {
+        notify: true
+      },
+      _firebaseConnected: {
+        value: false
+      }
+    },
+    _firebaseLoaded: function() {
+      this._firebaseConnected = true;
+      this.cards = this.fbCards;
+      this.backupCards = this.fbCards;
+      this.linkPaths('fbCards', 'cards');
+      this.linkPaths('backupCards', 'cards');
+    },
+    _backupLoaded: function() {
+      if (!this._firebaseConnected) {
+        this.cards = this.backupCards.slice();
+      }
+    }
   });
 </script>
