@@ -26,35 +26,29 @@
 <dom-module id="card-item">
   <template>
     <style>
-      :host {
-        display: block; box-sizing: border-box; min-height: 50px;
-      }
-      .row {
-        position: relative; padding: 16px 16px 16px 22px;
-      }
-      paper-checkbox {
-        margin-top: -4px; margin-right: 20px;
-      }
+      :host {display: block; box-sizing: border-box; min-height: 50px;}
+      .row {position: relative; padding: 16px 16px 16px 22px;}
+      paper-checkbox {margin-top: -4px; margin-right: 20px;}
       paper-checkbox[checked] + .label {
         color: #9E9E9E; text-decoration: line-through;
       }
     </style>
     <paper-material class="row layout horizontal center">
       <paper-checkbox id="checkbox"
-                      checked="{{card.isComplete}}"
-                      aria-labelledby$="[[_computeLabelId(card.uid)]]"></paper-checkbox>
-
+        checked="{{card.isComplete}}"
+        aria-labelledby$="[[_computeLabelId(card.uid)]]">
+      </paper-checkbox>
       <paper-input id="[[_computeLabelId(card.uid)]]"
-                   class="flex"
-                   value="{{card.label}}"
-                   no-label-float
-                   on-keypress="_checkConfirmation"></paper-input>
-
+        class="flex"
+        value="{{card.label}}"
+        no-label-float
+        on-keypress="_checkConfirmation">
+      </paper-input>
       <paper-icon-button icon="delete"
-                         class="btn-cancel"
-                         aria-label="Delete Card"
-                         tabindex="0"
-                         on-tap="_onDelete">
+        class="btn-cancel"
+        aria-label="Delete Card"
+        tabindex="0"
+        on-tap="_onDelete">
       </paper-icon-button>
     </paper-material>
   </template>
@@ -89,12 +83,8 @@
         margin-right: 33px;
         opacity: 0.54;
       }
-      .paper-menu > .iron-selected {
-        color: var(--default-primary-color);
-      }
       paper-menu a {
         text-decoration: none;
-        color: var(--menu-link-color);
         display: -ms-flexbox;
         display: -webkit-flex;
         display: flex;
@@ -144,15 +134,13 @@
         margin: 0 auto;
       }
     </style>
-    
-        <div class="content">
-          <card-list cards="{{cards}}"
-                     filter-by="{{route}}"
-                     on-delete-card="deleteCard">
-          </card-list>
-          <card-input on-add-card="addCard"></card-input>
-        </div>
-
+    <div class="content">
+      <card-list cards="{{cards}}"
+        filter-by="{{route}}"
+        on-delete-card="deleteCard">
+      </card-list>
+      <card-input on-add-card="addCard"></card-input>
+    </div>
   </template>
 </dom-module>
 <script>
@@ -218,7 +206,6 @@
         font-size: 14px;
       }
       paper-button[focused] {
-        /* https://github.com/PolymerElements/paper-button/pull/43 */
         outline-width: 3px;
       }
     </style>
@@ -250,9 +237,7 @@
   });
 </script>
 <dom-module id="card-list">
-
   <template>
-
     <style>
       :host {
         display: block;
@@ -276,9 +261,7 @@
         margin: 16px 0;
       }
     </style>
-
     <p class="no-more-msg" hidden="[[_cardsEmpty(cards.length)]]">No more cards! Add Some</p>
-
     <template is="dom-repeat"
               items="{{cards}}"
               as="card"
@@ -286,7 +269,6 @@
               observe="isComplete">
       <card-item card="{{card}}"></card-item>
     </template>
-
   </template>
 </dom-module>
   <script>
