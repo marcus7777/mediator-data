@@ -8,11 +8,9 @@
 <dom-module id="mediator-data">
   <template>
     <firebase-collection location="{{location}}"
-                            ref="{{ref}}"
-                            data="{{fbCards}}"
-                            on-firebase-value="_firebaseLoaded"
-                            log=[[log]]></firebase-collection>
-    <iron-localstorage name="mediator-data" on-iron-localstorage-load="_backupLoaded" value="{{data}}">
+      ref="{{ref}}" data="{{fbCards}}" on-firebase-value="_firebaseLoaded"
+      log=[[log]]></firebase-collection>
+    <iron-localstorage name="mediator-data" on-iron-localstorage-load="_backupLoaded" value="{{backupCards}}">
     </iron-localstorage>
   </template>
 </dom-module>
@@ -20,7 +18,7 @@
   Polymer({
     is: "mediator-data",
     properties: {
-      cards: {
+      data: {
         notify: true
       },
       _firebaseConnected: {
@@ -29,14 +27,14 @@
     },
     _firebaseLoaded: function() {
       this._firebaseConnected = true;
-      this.cards = this.fbCards;
+      this.data = this.fbCards;
       this.backupCards = this.fbCards;
       this.linkPaths('fbCards', 'cards');
       this.linkPaths('backupCards', 'cards');
     },
     _backupLoaded: function() {
       if (!this._firebaseConnected) {
-        this.cards = this.backupCards.slice();
+        this.data = this.backupCards.slice();
       }
     }
   });
