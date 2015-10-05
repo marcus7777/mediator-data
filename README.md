@@ -1,0 +1,2 @@
+# mediator-data
+firebase-collection
