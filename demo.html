@@ -31,7 +31,21 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../firebase-element/firebase-collection.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
-
+<!-- 
+                                                                      
+                    _______                                           
+/|                  \  ___ `'.                 __.....__              
+||                   ' |--.\  \    .--./)  .-''         '.            
+||                   | |    \  '  /.''\\  /     .-''"'-.  `.          
+||  __        __     | |     |  '| |  | |/     /________\   \         
+||/'__ '.  .:--.'.   | |     |  | \`-' / |                  |    _    
+|:/`  '. '/ |   \ |  | |     ' .' /("'`  \    .-------------'  .' |   
+||     | |`" __ | |  | |___.' /'  \ '---. \    '-.____...---. .   | / 
+||\    / ' .'.''| | /_______.'/    /'""'.\ `.             .'.'.'| |// 
+|/\'..' / / /   | |_\_______|/    ||     ||  `''-...... -'.'.'.-'  /  
+'  `'-'`  \ \._,\ '/              \'. __//                .'   \_.'   
+           `--'  `"                `'---'                             
+           -->
 <dom-module id="badge-view">
   <template>
     <div class="content">
@@ -111,6 +125,45 @@
     }
   });
 </script>
+<dom-module id="card-input">
+  <template>
+    <div class="input-wrapper">
+      <paper-input id="cardInput"
+                   no-label-float
+                   label="Add a Card"
+                   on-keydown="_checkAdd">
+      </paper-input>
+      <paper-button on-tap="_add">Add</paper-button>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'card-input',
+    // Listen for ENTER key
+    _checkAdd: function(e) {
+      if (e.keyCode === 13) {
+        this._add();
+      }
+    },
+    _add: function() {
+      if (this.$.cardInput.value) {
+        this.fire('add-card', {value: this.$.cardInput.value});
+        this.$.cardInput.value = null;
+      }
+    }
+  });
+</script>
+
+<!--
+.------..------..------..------..------.
+|C.--. ||A.--. ||R.--. ||D.--. ||S.--. |
+| :/\: || (\/) || :(): || :/\: || :/\: |
+| :\/: || :\/: || ()() || (__) || :\/: |
+| '--'C|| '--'A|| '--'R|| '--'D|| '--'S|
+`------'`------'`------'`------'`------'
+-->
+
 
 <dom-module id="card-view">
   <template>
