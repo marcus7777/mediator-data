@@ -22,6 +22,7 @@
 </html>
 
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../icon-icons/maps-icons.html">
 <link rel="import" href="../icon-icons/iron-icons.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
@@ -49,7 +50,7 @@
 <dom-module id="badge-view">
   <template>
     <div class="content">
-      <badge-list badge="{{badges}}"
+      <badge-list badges="{{badges}}"
         on-delete-badge="deleteBadge">
       </badge-list>
       <badge-input on-add-badge="addBadge"></badge-input>
@@ -63,8 +64,10 @@
       badges: Array
     },
     addBadge: function(e) {
-      this.push('badge', {
-        label: e.detail.value,
+      this.push('badges', {
+        icon: e.detail.icon,
+        subtitle: e.detail.subtitle,
+        title: e.detail.title,
         isComplete: false
       });
     },
@@ -100,10 +103,10 @@
 <dom-module id="badge-item">
   <template>
     <paper-material class="row layout horizontal center">
-      <h1>{{badge.label}}</h1>
-      <paper-checkbox id="checkbox"
-        checked="{{badge.isComplete}}"
-        aria-labelledby$="[[_computeLabelId(badge.uid)]]">
+      <h1>{{badge.title}}</h1>
+      <h2>{{badge.subtitle}}</h2>
+      <iron-icon icon="{{badge.icon}}"></iron-icon>
+      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}"
       </paper-checkbox>
       <paper-icon-button icon="delete"
         class="btn-cancel"
@@ -117,9 +120,6 @@
 <script>
   Polymer({
     is: 'badge-item',
-     _computeLabelId: function(uid) {
-      return 'badgeItemLabel-' + uid;
-    },
     _onDelete: function() {
       this.fire('delete-badge', {badge: badge.badge});
     }
@@ -128,9 +128,14 @@
 <dom-module id="badge-input">
   <template>
     <div class="input-wrapper">
-      <paper-input id="badgeInput"
-                   no-label-float
-                   label="Add a Badge"
+      <paper-input id="badgeTitle"
+                   label="Title">
+      </paper-input>
+      <paper-input id="badgeSubtitle"
+                   label="Subtitle">
+      </paper-input>
+      <paper-input id="badgeIcon"
+                   label="Icon"
                    on-keydown="_checkAdd">
       </paper-input>
       <paper-button on-tap="_add">Add</paper-button>
@@ -147,9 +152,15 @@
       }
     },
     _add: function() {
-      if (this.$.badgeInput.value) {
-        this.fire('add-badge', {value: this.$.badgeInput.value});
-        this.$.badgeInput.value = null;
+      if (this.$.badgeTitle.value && this.$.badgeSubtitle.value && this.$.badgeIcon.value) {
+        this.fire('add-badge', {
+          title: this.$.badgeTitle.value,
+          subtitle: this.$.badgeSubtitle.value,
+          icon: this.$.badgeIcon.value
+        });
+        this.$.badgeTitle.value = null;
+        this.$.badgeSubtitle.value = null;
+        this.$.badgeIcon.value = null;
       }
     }
   });
