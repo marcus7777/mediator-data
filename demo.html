@@ -125,12 +125,12 @@
     }
   });
 </script>
-<dom-module id="card-input">
+<dom-module id="badge-input">
   <template>
     <div class="input-wrapper">
-      <paper-input id="cardInput"
+      <paper-input id="badgeInput"
                    no-label-float
-                   label="Add a Card"
+                   label="Add a Badge"
                    on-keydown="_checkAdd">
       </paper-input>
       <paper-button on-tap="_add">Add</paper-button>
@@ -147,9 +147,9 @@
       }
     },
     _add: function() {
-      if (this.$.cardInput.value) {
-        this.fire('add-card', {value: this.$.cardInput.value});
-        this.$.cardInput.value = null;
+      if (this.$.badgeInput.value) {
+        this.fire('add-badge', {value: this.$.badgeInput.value});
+        this.$.badgeInput.value = null;
       }
     }
   });
