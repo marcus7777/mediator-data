@@ -9,11 +9,7 @@
     <h3>mediator-data Demo</h3>
     <template is="dom-bind">
       <mediator-data data="{{data}}" location="https://mediator-data.firebaseio-demo.com" type="firebase"></mediator-data>
-      <card-list cards="{{data}}"
-        filter-by="{{route}}"
-        on-delete-card="deleteCard">
-      </card-list>
-      <card-input on-add-card="addCard"></card-input>
+      <card-view cards="{{data}}"></card-view>
     </template>
   </body>
 </html>
@@ -28,6 +24,99 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../firebase-element/firebase-collection.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+
+<dom-module id="card-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #drawerToolbar {
+        color: var(--secondary-text-color);
+        background-color: var(--drawer-menu-color);
+      }
+      paper-menu iron-icon {
+        margin-right: 33px;
+        opacity: 0.54;
+      }
+      paper-menu a {
+        text-decoration: none;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        font-family: var(--default-font-family);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-weight: 400;
+        line-height: 24px;
+        min-height: 48px;
+        padding: 0 16px;
+      }
+      #mainToolbar .middle-container {
+        height: 100%;
+        margin-left: 48px;
+      }
+      #mainToolbar:not(.tall) .middle {
+        font-size: 18px;
+        padding-bottom: 0;
+      }
+      .app-name {
+        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        font-weight: bold;
+      }
+      .clear-btn:hover,
+      .clear-btn:focus {
+        background-color: var(--text-primary-color);
+        color: var(--default-primary-color);
+      }
+      /* Height of the scroll area */
+      .content {
+        height: 900px;
+        padding: 64px 16px 0;
+      }
+      card-list {
+        margin: 0 auto 32px;
+      }
+      card-list, card-input {
+        max-width: 1000px;
+      }
+      card-input {
+        margin: 0 auto;
+      }
+    </style>
+    <div class="content">
+      <card-list cards="{{cards}}"
+        filter-by="{{route}}"
+        on-delete-card="deleteCard">
+      </card-list>
+      <card-input on-add-card="addCard"></card-input>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'card-view',
+    properties: {
+      route: String,
+      cards: Array
+    },
+    addCard: function(e) {
+      this.push('cards', {
+        label: e.detail.value,
+        isComplete: false
+      });
+    },
+    deleteCard: function(e) {
+      this.arrayDelete('cards', e.detail.card);
+    }
+  });
+</script>
 
 <dom-module id="card-item">
   <template>
