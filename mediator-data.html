@@ -8,10 +8,10 @@
 
 <dom-module id="mediator-data">
   <template>
-    <firebase-collection location="{{fullLocation}}"
+    <firebase-collection location="{{_fullLocation}}"
       ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
       log=[[_log]]></firebase-collection>
-    <iron-localstorage name="path" on-iron-localstorage-load="_backupLoaded" value="{{backupData}}">
+    <iron-localstorage name="{{folder}}" on-iron-localstorage-load="_backupLoaded" value="{{backupData}}">
     </iron-localstorage>
   </template>
 </dom-module>
@@ -23,15 +23,15 @@
         type:String,
         value:"https://mediator-data.firebaseio-demo.com/"
       },
-      path: {
+      folder:{
         type:String,
-        value:""
+        value:"todo2"
       },
       data: {
         notify: true
       },
       _fullLocation: {
-        computed: "_cat(location,path)"
+        computed: "_cat(location,folder)"
       },
       _firebaseConnected: {
         value: false
@@ -55,8 +55,8 @@
         this.data = this.backupData.slice();
       }
     },
-    _cat: function(location,path) {
-      return location+path;
+    _cat: function(a,b) {
+      return a+b;
     }
   });
 </script>
