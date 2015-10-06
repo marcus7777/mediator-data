@@ -24,6 +24,8 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../icon-icons/maps-icons.html">
 <link rel="import" href="../icon-icons/iron-icons.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-material/paper-material.html">
@@ -31,6 +33,7 @@
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../firebase-element/firebase-collection.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
 <!-- 
 88                                88                                      
@@ -135,7 +138,7 @@
                    label="Icon"
                    on-keydown="_checkAdd">
       </paper-input>
-      <paper-dropdown-menu label="Your favourite pastry">
+      <paper-dropdown-menu label="icon">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="{{iconLists}}">
             <paper-item>
