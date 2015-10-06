@@ -135,6 +135,17 @@
                    label="Icon"
                    on-keydown="_checkAdd">
       </paper-input>
+      <paper-dropdown-menu label="Your favourite pastry">
+        <paper-menu class="dropdown-content">
+          <template is="dom-repeat" items="{{iconLists}}">
+            <paper-item>
+              <template is="dom-repeat" items="{{item}}">
+                <iron-icon icon=""></iron-icon>
+              </template>
+            </paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
       <paper-button on-tap="_add">Add</paper-button>
     </div>
   </template>
