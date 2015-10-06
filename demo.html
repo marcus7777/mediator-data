@@ -106,7 +106,7 @@
       <h1>{{badge.title}}</h1>
       <h2>{{badge.subtitle}}</h2>
       <iron-icon icon="{{badge.icon}}"></iron-icon>
-      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}"
+      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}">
       </paper-checkbox>
       <paper-icon-button icon="delete"
         class="btn-cancel"
@@ -121,7 +121,7 @@
   Polymer({
     is: 'badge-item',
     _onDelete: function() {
-      this.fire('delete-badge', {badge: badge.badge});
+      this.fire('delete-badge', {badge: this.badge});
     }
   });
 </script>
@@ -134,21 +134,16 @@
       <paper-input id="badgeSubtitle"
                    label="Subtitle">
       </paper-input>
-      <paper-input id="badgeIcon"
-                   label="Icon"
+      <paper-input label="Icon" value="{{icon}}"
                    on-keydown="_checkAdd">
       </paper-input>
-      <paper-dropdown-menu label="icon">
-        <paper-menu class="dropdown-content">
-          <template is="dom-repeat" items="{{iconLists}}">
-            <paper-item>
-              <template is="dom-repeat" items="{{item}}">
-                <iron-icon icon="{{item}}"></iron-icon>
-              </template>
-            </paper-item>
-          </template>
-        </paper-menu>
-      </paper-dropdown-menu>
+      <template is="dom-repeat" items="{{iconLists}}">
+        <template is="dom-repeat" items="{{item}}">
+          <iron-icon on-tap="_setIcon" icon="{{item}}"></iron-icon>
+        </template>
+        <br/>
+      </template>
+      <a href="http://open-elements.org/bower_components/iron-icons/demo/index.html">more icons</a>
       <paper-button on-tap="_add">Add</paper-button>
     </div>
   </template>
@@ -162,7 +157,7 @@
           ["android","book","shopping-cart","build","check"],
           ["face","favorite","grade","note-add","language"],
           ["help","gesture","bug-report","attachment","assignment-return"],
-          ["accessibility","account-balance","balance-wallet","account-circle","backspace"],
+          ["accessibility","account-balance","drafts","account-circle","backspace"],
           ["autorenew","block","card-travel","change-history","content-paste"]
         ] 
       }
@@ -174,17 +169,20 @@
       }
     },
     _add: function() {
-      if (this.$.badgeTitle.value && this.$.badgeSubtitle.value && this.$.badgeIcon.value) {
+      if (this.$.badgeTitle.value && this.$.badgeSubtitle.value && this.icon) {
         this.fire('add-badge', {
           title: this.$.badgeTitle.value,
           subtitle: this.$.badgeSubtitle.value,
-          icon: this.$.badgeIcon.value
+          icon: this.icon
         });
         this.$.badgeTitle.value = null;
         this.$.badgeSubtitle.value = null;
-        this.$.badgeIcon.value = null;
+        this.icon = null;
       }
-    }
+    },
+    _setIcon: function(e){
+      this.icon = e.target.icon;
+    } 
   });
 </script>
 
