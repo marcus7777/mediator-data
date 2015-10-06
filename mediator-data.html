@@ -11,7 +11,7 @@
     <firebase-collection location="{{fullLocation}}"
       ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
       log=[[_log]]></firebase-collection>
-    <iron-localstorage name="mediator-data" on-iron-localstorage-load="_backupLoaded" value="{{backupCards}}">
+    <iron-localstorage name="{{path}}" on-iron-localstorage-load="_backupLoaded" value="{{backupCards}}">
     </iron-localstorage>
   </template>
 </dom-module>
