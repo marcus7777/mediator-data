@@ -49,10 +49,10 @@
 <dom-module id="badge-view">
   <template>
     <div class="content">
-      <badge-list badge="{{badge}}"
-        on-delete-card="deleteBadge">
+      <badge-list badge="{{badges}}"
+        on-delete-badge="deleteBadge">
       </badge-list>
-      <badge-input on-add-badge="addBadge"></card-input>
+      <badge-input on-add-badge="addBadge"></badge-input>
     </div>
   </template>
 </dom-module>
@@ -60,7 +60,7 @@
   Polymer({
     is: 'badge-view',
     properties: {
-      badge: Array
+      badges: Array
     },
     addBadge: function(e) {
       this.push('badge', {
@@ -69,7 +69,7 @@
       });
     },
     deleteBadge: function(e) {
-      this.arrayDelete('cards', e.detail.card);
+      this.arrayDelete('badges', e.detail.badge);
     }
   });
 </script>
@@ -77,11 +77,8 @@
 <dom-module id="badge-list">
   <template>
     <p class="no-more-msg" hidden="[[_empty(badges.length)]]">No badges</p>
-    <template is="dom-repeat"
-              items="{{badges}}"
-              filter="{{_computeFilter(filterBy)}}"
-              observe="isComplete">
-      <badge-item badge="{{badge}}"></badge-item>
+    <template is="dom-repeat" items="{{badges}}" observe="isComplete">
+      <badge-item badge="{{item}}"></badge-item>
     </template>
   </template>
 </dom-module>
@@ -106,7 +103,7 @@
       <h1>{{badge.label}}</h1>
       <paper-checkbox id="checkbox"
         checked="{{badge.isComplete}}"
-        aria-labelledby$="[[_computeLabelId(card.uid)]]">
+        aria-labelledby$="[[_computeLabelId(badge.uid)]]">
       </paper-checkbox>
       <paper-icon-button icon="delete"
         class="btn-cancel"
@@ -120,8 +117,11 @@
 <script>
   Polymer({
     is: 'badge-item',
+     _computeLabelId: function(uid) {
+      return 'badgeItemLabel-' + uid;
+    },
     _onDelete: function() {
-      this.fire('delete-badge', {card: badge.card});
+      this.fire('delete-badge', {badge: badge.badge});
     }
   });
 </script>
@@ -139,7 +139,7 @@
 </dom-module>
 <script>
   Polymer({
-    is: 'card-input',
+    is: 'badge-input',
     // Listen for ENTER key
     _checkAdd: function(e) {
       if (e.keyCode === 13) {
