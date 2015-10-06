@@ -125,15 +125,9 @@
 <dom-module id="badge-input">
   <template>
     <div class="input-wrapper">
-      <paper-input id="badgeTitle"
-                   label="Title">
-      </paper-input>
-      <paper-input id="badgeSubtitle"
-                   label="Subtitle">
-      </paper-input>
-      <paper-input label="Icon" value="{{icon}}"
-                   on-keydown="_checkAdd">
-      </paper-input>
+      <paper-input id="badgeTitle" label="Title"></paper-input>
+      <paper-input id="badgeSubtitle" label="Subtitle"></paper-input>
+      <paper-input label="Icon" value="{{icon}}" on-keydown="_checkAdd"></paper-input>
       <template is="dom-repeat" items="{{iconLists}}">
         <template is="dom-repeat" items="{{item}}">
           <iron-icon on-tap="_setIcon" icon="{{item}}"></iron-icon>
@@ -224,21 +218,9 @@
 <dom-module id="card-item">
   <template>
     <paper-material class="row layout horizontal center">
-      <paper-checkbox id="checkbox"
-        checked="{{card.isComplete}}"
-        aria-labelledby$="[[_computeLabelId(card.uid)]]">
-      </paper-checkbox>
-      <paper-input id="[[_computeLabelId(card.uid)]]"
-        class="flex"
-        value="{{card.label}}"
-        no-label-float
-        on-keypress="_checkConfirmation">
-      </paper-input>
-      <paper-icon-button icon="delete"
-        class="btn-cancel"
-        aria-label="Delete Card"
-        tabindex="0"
-        on-tap="_onDelete">
+      <paper-checkbox id="checkbox" checked="{{card.isComplete}}"></paper-checkbox>
+      <paper-input class="flex" value="{{card.label}}"></paper-input>
+      <paper-icon-button icon="delete" class="btn-cancel" aria-label="Delete Card" tabindex="0" on-tap="_onDelete">
       </paper-icon-button>
     </paper-material>
   </template>
@@ -251,9 +233,6 @@
         type: Boolean, value: false, notify: true
       }
     },
-    _computeLabelId: function(uid) {
-      return 'cardItemLabel-' + uid;
-    },
     _onDelete: function() {
       this.fire('delete-card', {card: this.card});
     }
@@ -262,11 +241,7 @@
 <dom-module id="card-input">
   <template>
     <div class="input-wrapper">
-      <paper-input id="cardInput"
-                   no-label-float
-                   label="Add a Card"
-                   on-keydown="_checkAdd">
-      </paper-input>
+      <paper-input id="cardInput" no-label-float label="Add a Card" on-keydown="_checkAdd"></paper-input>
       <paper-button on-tap="_add">Add</paper-button>
     </div>
   </template>
@@ -290,13 +265,9 @@
 </script>
 <dom-module id="card-list">
   <template>
-    <p class="no-more-msg" hidden="[[_cardsEmpty(cards.length)]]">No more cards! Add Some</p>
-    <template is="dom-repeat"
-              items="{{cards}}"
-              as="card"
-              filter="{{_computeFilter(filterBy)}}"
-              observe="isComplete">
-      <card-item card="{{card}}"></card-item>
+    <p class="no-more-msg" hidden="[[_empty(cards.length)]]">No more cards! Add Some</p>
+    <template is="dom-repeat" items="{{cards}}" observe="isComplete">
+      <card-item card="{{item}}"></card-item>
     </template>
   </template>
 </dom-module>
@@ -310,24 +281,8 @@
           value: 'all'
         }
       },
-      _cardsEmpty: function(length) {
+      _empty: function(length) {
         return !!length;
-      },
-      _computeFilter: function(filterBy) {
-        if (filterBy) {
-          // If filterBy is 'all', return a filter that always returns
-          // the card
-          if (filterBy === 'all') {
-            return function(item) {
-              return item;
-            };
-          }
-          // Handle 'notfavorite', or its inverse, 'favorite'
-          var ifComplete = (filterBy === 'notfavorite');
-          return function(item) {
-            return item.isComplete === ifComplete;
-          };
-        }
       }
     });
   </script>
