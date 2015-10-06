@@ -46,6 +46,9 @@
       this.backupCards = this.fbData;
       this.linkPaths('fbCards', 'data');
       this.linkPaths('backupCards', 'data');
+      if (this._log) {
+        console.log(data, this.data)
+      }
     },
     _backupLoaded: function() {
       if (!this._firebaseConnected) {
