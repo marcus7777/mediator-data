@@ -11,7 +11,7 @@
     <firebase-collection location="{{fullLocation}}"
       ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
       log=[[_log]]></firebase-collection>
-    <iron-localstorage name="{{path}}" on-iron-localstorage-load="_backupLoaded" value="{{backupCards}}">
+    <iron-localstorage name="{{path}}" on-iron-localstorage-load="_backupLoaded" value="{{backupData}}">
     </iron-localstorage>
   </template>
 </dom-module>
@@ -43,16 +43,16 @@
     _firebaseLoaded: function() {
       this._firebaseConnected = true;
       this.data = this.fbData;
-      this.backupCards = this.fbData;
-      this.linkPaths('fbCards', 'data');
-      this.linkPaths('backupCards', 'data');
+      this.backupData = this.fbData;
+      this.linkPaths('fbData', 'data');
+      this.linkPaths('backupData', 'data');
       if (this._log) {
         console.log(data, this.data)
       }
     },
     _backupLoaded: function() {
       if (!this._firebaseConnected) {
-        this.data = this.backupCards.slice();
+        this.data = this.backupData.slice();
       }
     },
     _cat: function(location,path) {
