@@ -99,13 +99,12 @@
 </script>
 <dom-module id="badge-item">
   <template>
-    <paper-material class="row layout horizontal center">
-      <h1>{{badge.title}}</h1>
+    <paper-material class="row layout center">
+      <h1>{{badge.title}}<iron-icon style="float:right;margin:10px" icon="{{badge.icon}}"></iron-icon></h1>
       <h2>{{badge.subtitle}}</h2>
-      <iron-icon icon="{{badge.icon}}"></iron-icon>
+      
       <paper-checkbox id="checkbox" checked="{{badge.isComplete}}"></paper-checkbox>
       <paper-icon-button icon="delete"
-        class="btn-cancel"
         aria-label="Delete Badge"
         tabindex="0"
         on-tap="_onDelete">
@@ -217,7 +216,7 @@
 <dom-module id="card-item">
   <template>
     <paper-material class="row layout horizontal center">
-      <paper-checkbox id="checkbox" checked="{{card.isComplete}}"></paper-checkbox>
+      <paper-checkbox checked="{{card.isComplete}}"></paper-checkbox>
       <paper-input class="flex" value="{{card.label}}"></paper-input>
       <paper-icon-button icon="delete" class="btn-cancel" aria-label="Delete Card" tabindex="0" on-tap="_onDelete">
       </paper-icon-button>
@@ -227,11 +226,6 @@
 <script>
   Polymer({
     is: 'card-item',
-    properties: {
-      favorite: {
-        type: Boolean, value: false, notify: true
-      }
-    },
     _onDelete: function() {
       this.fire('delete-card', {card: this.card});
     }
@@ -270,18 +264,11 @@
     </template>
   </template>
 </dom-module>
-  <script>
-    Polymer({
-      is: 'card-list',
-      properties: {
-        cards: Array,
-        filterBy: {
-          type: String,
-          value: 'all'
-        }
-      },
-      _empty: function(length) {
-        return !!length;
-      }
-    });
-  </script>
+<script>
+  Polymer({
+    is: 'card-list',
+    _empty: function(length) {
+      return !!length;
+    }
+  });
+</script>
