@@ -25,6 +25,7 @@
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../sortable-list/sortable-list.html"> 
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
@@ -67,7 +68,8 @@
         icon: e.detail.icon,
         subtitle: e.detail.subtitle,
         title: e.detail.title,
-        isComplete: false
+        isComplete: false,
+        weight:1
       });
     },
     deleteBadge: function(e) {
@@ -94,7 +96,7 @@
 </script>
 <dom-module id="badge-sm-list">
   <template>
-    <template is="dom-repeat" items="{{badges}}">
+    <template is="dom-repeat" items="{{badges}}" sort="_sort" observe="isComplete">
       <template is="dom-if" if="{{!item.isComplete}}">
         <iron-icon title="{{item.title}}" icon="{{item.icon}}"></iron-icon>
       </template>
@@ -110,7 +112,10 @@
     is: 'badge-sm-list',
     _empty: function(length) {
       return !!length;
-    }
+    },
+    _sort: function(a,b) {
+      return a.isComplete<b.isComplete;
+    },
   });
 </script>
 <dom-module id="badge-item">
