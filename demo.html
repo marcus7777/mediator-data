@@ -78,7 +78,7 @@
   <template>
     <p class="no-more-msg" hidden="[[_empty(badges.length)]]">No badges</p>
     <template is="dom-repeat" items="{{badges}}" observe="isComplete">
-      <badge-item badge="{{item}}"></badge-item>
+      <badge-item style="background: #fff;margin: 16px, 16px;height: 100px;margin: 5px;display: inline-block" badge="{{item}}"></badge-item>
     </template>
   </template>
 </dom-module>
@@ -103,8 +103,7 @@
       <h1>{{badge.title}}</h1>
       <h2>{{badge.subtitle}}</h2>
       <iron-icon icon="{{badge.icon}}"></iron-icon>
-      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}">
-      </paper-checkbox>
+      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}"></paper-checkbox>
       <paper-icon-button icon="delete"
         class="btn-cancel"
         aria-label="Delete Badge"
