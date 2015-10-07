@@ -80,7 +80,7 @@
   <template>
     <p class="no-more-msg" hidden="[[_empty(badges.length)]]">No badges</p>
     <template is="dom-repeat" items="{{badges}}" observe="isComplete">
-      <badge-item badge="{{item}}"></badge-item>
+      <badge-item style="display: inline-block" badge="{{item}}"></badge-item>
     </template>
   </template>
 </dom-module>
@@ -115,12 +115,12 @@
 </script>
 <dom-module id="badge-item">
   <template>
-    <paper-material class="row layout center">
-      <h1>{{badge.title}}<iron-icon style="float:right;margin:10px" icon="{{badge.icon}}"></iron-icon></h1>
-      <h2>{{badge.subtitle}}</h2>
+    <paper-material style="background: #fff;margin: 16px, 16px;" class="row layout center">
+      <h1 style="padding: 0 10px">{{badge.title}}<iron-icon style="float:right;margin:10px" icon="{{badge.icon}}"></iron-icon></h1>
+      <h2 style="padding: 0 10px">{{badge.subtitle}}</h2>
       
-      <paper-checkbox id="checkbox" checked="{{badge.isComplete}}"></paper-checkbox>
-      <paper-icon-button icon="delete"
+      <paper-checkbox style="padding: 0 10px" id="checkbox" checked="{{badge.isComplete}}"></paper-checkbox>
+      <paper-icon-button style="padding:10px;color:gray" icon="delete"
         aria-label="Delete Badge"
         tabindex="0"
         on-tap="_onDelete">
