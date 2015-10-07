@@ -80,7 +80,7 @@
   <template>
     <p class="no-more-msg" hidden="[[_empty(badges.length)]]">No badges</p>
     <template is="dom-repeat" items="{{badges}}" observe="isComplete">
-      <badge-item style="background: #fff;margin: 16px, 16px;height: 100px;margin: 5px;display: inline-block" badge="{{item}}"></badge-item>
+      <badge-item badge="{{item}}"></badge-item>
     </template>
   </template>
 </dom-module>
