@@ -49,11 +49,11 @@
 <dom-module id="badge-view">
   <template>
     <div class="content">
-      <badge-sm-list on-tap="toggleView" badges="{{badges}}" on-delete-badge="deleteBadge">
-      </badge-sm-list>
+      <badge-sm-list hidden="{{admin}}" on-tap="toggleView" badges="{{badges}}" on-delete-badge="deleteBadge"></badge-sm-list>
       <template is="dom-if" if="{{admin}}">
         <badge-list badges="{{badges}}" on-delete-badge="deleteBadge"></badge-list>
         <badge-input on-add-badge="addBadge"></badge-input>
+        <paper-button raised on-tap="toggleView" >Done</paper-button>
       </template>
     </div>
   </template>
@@ -109,14 +109,14 @@
         <iron-icon style="color:green" title="{{item.title}}" icon="{{item.icon}}"></iron-icon>
       </template>
     </template>
+    <template is="dom-if" if="{{!badges.length}}">
+      <iron-icon icon="icons:add"></iron-icon>
+    </template>
   </template>
 </dom-module>
 <script>
   Polymer({
     is: 'badge-sm-list',
-    _empty: function(length) {
-      return !!length;
-    },
     _sort: function(a,b) {
       return a.isComplete<b.isComplete;
     },
