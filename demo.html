@@ -49,12 +49,12 @@
 <dom-module id="badge-view">
   <template>
     <div class="content">
-      <badge-sm-list badges="{{badges}}" on-delete-badge="deleteBadge">
+      <badge-sm-list on-tap="toggleView" badges="{{badges}}" on-delete-badge="deleteBadge">
       </badge-sm-list>
-      <badge-list badges="{{badges}}"
-        on-delete-badge="deleteBadge">
-      </badge-list>
-      <badge-input on-add-badge="addBadge"></badge-input>
+      <template is="dom-if" if="{{admin}}">
+        <badge-list badges="{{badges}}" on-delete-badge="deleteBadge"></badge-list>
+        <badge-input on-add-badge="addBadge"></badge-input>
+      </template>
     </div>
   </template>
 </dom-module>
@@ -75,6 +75,9 @@
     },
     deleteBadge: function(e) {
       this.arrayDelete('badges', e.detail.badge);
+    },
+    toggleView: function() {
+      this.admin = !this.admin;
     }
   });
 </script>
