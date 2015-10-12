@@ -1,7 +1,7 @@
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../firebase-element/firebase-collection.html">
 <!--
-`<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{}}">` 
+`<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{data}}" folder="{{folder}}"></mediator-data>` 
 @demo demo.html todo and badges
 @demo badges.demo.html badges
 
@@ -26,7 +26,7 @@
       },
       folder:{
         type:String,
-        value:"todo2"
+        value:"todo"
       },
       data: {
         notify: true
