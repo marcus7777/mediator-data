@@ -35,8 +35,9 @@
       _loadbk: {computed:"_firebaseLoadedBk(fbData, fbDataBk)"}
     },
     _firebaseLoadedBk: function(fbData, fbDataBk) {
-      if (!fbData || fbData.length < 1) {
+      if ((!fbData || fbData.length < 1) && this.notSetFromBk) {
         this.fbData = clone(fbDataBk)
+        this.notSetFromBk = false
       }
     },    
     _firebaseLoaded: function() {
