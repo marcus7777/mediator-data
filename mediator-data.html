@@ -10,7 +10,7 @@
 <dom-module id="mediator-data">
   <template>
     <template is="dom-if" if="{{_firebaseConnected}}">
-      <firebase-collection location="{{_fullLocationIfNoData}}"
+      <firebase-collection id="bk" location="{{_fullLocationIfNoData}}"
         data="{{fbDataBk}}" on-firebase-value="_firebaseLoadedBk"
       ></firebase-collection>
     </template>
