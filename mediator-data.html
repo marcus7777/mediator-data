@@ -11,8 +11,8 @@
   <template>
     <template is="dom-if" if="{{_firebaseConnected}}">
       <firebase-collection location="{{_fullLocationIfNoData}}"
-        ref="{{ref}}" data="{{fbDataBk}}" on-firebase-value="_firebaseLoadedBk"
-        log=[[_log]]></firebase-collection>
+        data="{{fbDataBk}}" on-firebase-value="_firebaseLoadedBk"
+      ></firebase-collection>
     </template>
     <firebase-collection location="{{_fullLocation}}"
       ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
