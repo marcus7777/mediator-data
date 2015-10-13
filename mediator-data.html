@@ -9,6 +9,11 @@
 
 <dom-module id="mediator-data">
   <template>
+    <template is="dom-if" if="{{_firebaseConnected}}">
+      <firebase-collection location="{{_fullLocationIfNoData}}"
+        ref="{{ref}}" data="{{fbDataBk}}" on-firebase-value="_firebaseLoadedBk"
+        log=[[_log]]></firebase-collection>
+    </template>
     <firebase-collection location="{{_fullLocation}}"
       ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
       log=[[_log]]></firebase-collection>
@@ -31,6 +36,9 @@
       data: {
         notify: true
       },
+      _fullLocationIfNoData: {
+        computed: "_cat(location,ifNoData)"
+      },
       _fullLocation: {
         computed: "_cat(location,folder)"
       },
@@ -41,6 +49,10 @@
         value: false
       }
     },
+    _firebaseLoadedBk: function() {
+      if (!this.data) {
+      this.data = this.fbDataBk
+    },    
     _firebaseLoaded: function() {
       this._firebaseConnected = true;
       this.data = this.fbData;
