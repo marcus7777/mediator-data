@@ -34,7 +34,7 @@
       _fullLocation: {computed: '_cat(location, folder)'},
       _firebaseConnected: {value: false},
       _log: {value: false},
-      _loadbk: {computed: '_firebaseLoadedBk(fbData, loadedDefaultDataFb)'}
+      _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
     },
     _getDefaultData: function (defaultDataFb) {
       for (var i = 0; i < defaultDataFb.length; i++) {
