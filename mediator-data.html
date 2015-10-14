@@ -36,7 +36,7 @@
       _log: {value: false},
       _loadbk: {computed: '_firebaseLoadedBk(fbData, loadedDefaultDataFb)'}
     },
-    _getDefaultData: function () {
+    _getDefaultData: function (defaultDataFb) {
       for (var i = 0; i < defaultDataFb.length; i++) {
         delete (defaultDataFb[i].__firebaseKey__)
         this.push("data",defaultDataFb[i])
