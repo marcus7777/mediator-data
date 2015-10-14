@@ -40,6 +40,8 @@
       for (var i = 0; i < defaultDataFb.length; i++) {
         delete (defaultDataFb[i].__firebaseKey__)
         this.push("data",defaultDataFb[i])
+        this.push("fbData",defaultDataFb[i])
+        this.push("backupData",defaultDataFb[i])
       }
     },
     _firebaseDefaultLoaded: function () {
