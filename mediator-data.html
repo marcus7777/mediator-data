@@ -47,8 +47,8 @@
       this.loadedDefaultDataFb = this.defaultDataFb
     },
     _firebaseLoadedBk: function (fbData, loadedDefaultDataFb) {
-      if (this.fbData.length < 1 && this.loadedDefaultDataFb.length > 1) {
-        this._getDefaultData()
+      if (fbData.length < 1 && loadedDefaultDataFb.length > 1) {
+        this._getDefaultData(loadedDefaultDataFb)
       }
     },
     _firebaseLoaded: function () {
