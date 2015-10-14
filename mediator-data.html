@@ -45,14 +45,15 @@
     _firebaseDefaultLoaded: function () {
       this.loadedDefaultDataFb = this.defaultDataFb
     },
-    _firebaseLoadedBk: function (fbData, loadedDefaultDataFb) {
-      if (fbData.length < 1 && loadedDefaultDataFb.length > 1) {
+    _firebaseLoadedBk: function (loadedFbData, loadedDefaultDataFb) {
+      if (loadedFbData.length < 1 && loadedDefaultDataFb.length > 1) {
         this._getDefaultData(loadedDefaultDataFb)
       }
     },
     _firebaseLoaded: function () {
       this._firebaseConnected = true
       this.data = this.fbData
+      this.loadedFbData = this.fbData
       this.backupData = this.fbData
       this.linkPaths('fbData', 'data')
       this.linkPaths('backupData', 'data')
