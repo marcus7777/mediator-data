@@ -40,7 +40,7 @@
       _loadbk: {computed:"_firebaseLoadedBk(fbData, fbDataBk)"}
     },
     _firebaseLoadedBk: function(fbData, fbDataBk) {
-      debounce('Give firebase time load both', function() {
+      this.debounce('Give firebase time load both', function() {
         if (this.fbData.length < 1 || this.fbDataBk.length > 1) {
           this.loadFromDefault = true
         }
