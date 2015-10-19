@@ -39,7 +39,7 @@
       _log: {value: false},
       _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
     },
-    observers: [
+  /*  observers: [
       'debounceInput(data.*)','debounceFbInput(fbData.*)'
     ],
     debounceFbInput: function(fbData){
@@ -55,7 +55,7 @@
     },
     debounceInput: function(data){
       this.debounce("_updateData", this._updateData, 3000)
-    },
+    }, */
     _updateData: function () {
       if (this.data !== this.fbData) {
         this.fbData = this.data
@@ -85,6 +85,8 @@
       this.data = this.fbData
       this.loadedFbData = this.fbData
       this.backupData = this.fbData
+      this.linkPaths('fbData', 'data')
+      this.linkPaths('backupData', 'data')
     },
     _backupLoaded: function () {
       if (!this._firebaseConnected) {
