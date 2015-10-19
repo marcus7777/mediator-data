@@ -40,8 +40,19 @@
       _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
     },
     observers: [
-      'debounceInput(data)'
+      'debounceInput(data)','debounceFbInput(fbData)'
     ],
+    debounceFbInput: function(fbData){
+      this.debounce("_updateData", this._updateFbData, 3000)
+    },
+    _updateFbData: function (fbData) {
+      if (this.data !== this.fbData) {
+        this.data = this.fbData
+      }
+      if (this.fbData !== this.backupData) {
+        this.backupData = this.fbData
+      }
+    },
     debounceInput: function(data){
       this.debounce("_updateData", this._updateData, 3000)
     },
