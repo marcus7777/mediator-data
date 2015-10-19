@@ -40,7 +40,7 @@
       _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
     },
     observers: [
-      'debounceInput(data)','debounceFbInput(fbData)'
+      'debounceInput(data.*)','debounceFbInput(fbData.*)'
     ],
     debounceFbInput: function(fbData){
       this.debounce("_updateData", this._updateFbData, 3000)
