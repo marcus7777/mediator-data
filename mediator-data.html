@@ -10,16 +10,19 @@
 <dom-module id="mediator-data">
   <template>
     <firebase-collection location="{{_fullLocation}}"
-      ref="{{ref}}" data="{{fbData}}" on-firebase-value="_firebaseLoaded"
-      log=[[_log]]></firebase-collection>
+      data="{{fbData}}" 
+      on-firebase-value="_firebaseLoaded">
+    </firebase-collection>
+    
     <iron-localstorage name="{{folder}}" on-iron-localstorage-load="_backupLoaded" value="{{backupData}}">
     </iron-localstorage>
     
     <firebase-collection
       location="{{_fullLocationIfNoData}}"
       data="{{defaultDataFb}}"
-      on-firebase-value="_firebaseDefaultLoaded"
-    ></firebase-collection>
+      on-firebase-value="_firebaseDefaultLoaded">
+    </firebase-collection>
+    
   </template>
 </dom-module>
 <script>
@@ -35,6 +38,20 @@
       _firebaseConnected: {value: false},
       _log: {value: false},
       _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
+    },
+    observers: [
+      'debounceInput(data)'
+    ],
+    debounceInput: function(data){
+      this.debounce("_updateData", this._updateData, 3000)
+    },
+    _updateData: function () {
+      if (this.data !== this.fbData) {
+        this.fbData = this.data
+      }
+      if (this.data !== this.backupData) {
+        this.backupData = this.data
+      }
     },
     _getDefaultData: function (defaultDataFb) {
       for (var i = 0; i < defaultDataFb.length; i++) {
@@ -57,11 +74,6 @@
       this.data = this.fbData
       this.loadedFbData = this.fbData
       this.backupData = this.fbData
-      this.linkPaths('fbData', 'data')
-      this.linkPaths('backupData', 'data')
-      if (this._log) {
-        console.log('data', this.data)
-      }
     },
     _backupLoaded: function () {
       if (!this._firebaseConnected) {
