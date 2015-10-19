@@ -153,9 +153,9 @@
 <dom-module id="badge-input">
   <template>
     <paper-dialog>
-        <input value="{{badgeTitle::change}}" label="Title" />
-        <input value="{{badgeSubtitle::change}}" label="Subtitle" />
-        <pick-icon icon="{{icon}}"></pick-icon>
+      <paper-input value="{{badgeTitle::change}}" label="Title"></paper-input>
+      <paper-input value="{{badgeSubtitle::change}}" label="Subtitle"></paper-input>
+      <pick-icon icon="{{icon}}"></pick-icon>
       <paper-button on-tap="_add">Add</paper-button>
     </paper-dialog>
     <iron-icon icon="add" on-tap="add" ></iron-icon>
