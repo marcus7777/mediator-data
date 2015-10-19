@@ -10,7 +10,7 @@
 <dom-module id="mediator-data">
   <template>
     <firebase-collection location="{{_fullLocation}}"
-      data="{{fbData}}" 
+      data="{{fbData}}" ref="{{ref}}" 
       on-firebase-value="_firebaseLoaded">
     </firebase-collection>
     
