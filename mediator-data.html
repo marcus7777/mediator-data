@@ -1,5 +1,5 @@
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
-<link rel="import" href="../firebase-element/firebase-collection.html">
+<link rel="import" href="../firebase-element/firebase.html">
 <!--
 `<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{data}}" folder="{{folder}}"></mediator-data>` 
 @demo demo.html todo and badges
@@ -9,19 +9,8 @@
 
 <dom-module id="mediator-data">
   <template>
-    <firebase-collection location="{{_fullLocation}}"
-      data="{{fbData}}" ref="{{ref}}" 
-      on-firebase-value="_firebaseLoaded">
-    </firebase-collection>
-    
     <iron-localstorage name="{{folder}}" on-iron-localstorage-load="_backupLoaded" value="{{backupData}}">
     </iron-localstorage>
-    
-    <firebase-collection
-      location="{{_fullLocationIfNoData}}"
-      data="{{defaultDataFb}}"
-      on-firebase-value="_firebaseDefaultLoaded">
-    </firebase-collection>
   </template>
 </dom-module>
 <script>
@@ -38,9 +27,19 @@
       _log: {value: false},
       _loadbk: {computed: '_firebaseLoadedBk(loadedFbData, loadedDefaultDataFb)'}
     },
-  /*  observers: [
-      'debounceInput(data.*)','debounceFbInput(fbData.*)'
+    observers: [
+      'setupFirebase(_fullLocation)','setupFirebaseIfNoData(_fullLocationIfNoData)','setData(data)'
     ],
+    setupFirebase: function(_fullLocation) {
+      this.firebaseRef = new Firebase(_fullLocation)
+    },
+    setupFirebaseIfNoData: function(_fullLocationIfNoData) {
+      this.firebaseRefIfNoData = new Firebase(_fullLocationIfNoData)
+    },
+    setData: function(data) {
+      this.firebaseRef.set(data);
+    }
+    /*
     debounceFbInput: function(fbData){
       this.debounce("_updateData", this._updateFbData, 3000)
     },
