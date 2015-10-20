@@ -1,4 +1,4 @@
-<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<!-- <link rel="import" href="../iron-localstorage/iron-localstorage.html"> -->
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <!--
 `<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{data}}" folder="{{folder}}"></mediator-data>` 
@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" content-type="application/json" url="{{setDataUrl}}" ></iron-ajax>
-    <!-- <iron-localstorage name="{{folder}}" value="{{data}}"></iron-localstorage> -->
+    <!-- <iron-localstorage name="{{folder}}" value="{{data}}"></iron-localstorage>  -->
   </template>
 </dom-module>
 <script>
@@ -22,18 +22,16 @@
       setDataUrl: {computed:'getSetDataUrl(location, folder)'},
       location: {type: String, value: 'https://mediator-data.firebaseio-demo.com/'},
       folder: {type: String, value: 'data'},
-      ifNoData: {type: String, value: 'default'},
-      data: {notify: true}
+      defaultFolder: {type: String, value: 'default'},
+      data: {type: Array, notify: true}
     },
     observers: [
       "load(dataAll, folder)",
-      "loadLs(localStorage, folder)",
+      "load(localStorage, folder)",
       "setDataFolder(data.*, folder, dataAll.*)",
       "setData(dataAll.*, folder)"
     ],
-    loadLs: function (dataAll, folder) {
-      this.data = this.getData(dataAll, folder)
-    },
+
     load: function (dataAll, folder) {
       this.data = this.getData(dataAll, folder)
     },
@@ -48,22 +46,23 @@
       }
     },
     getData: function(dataAll, folder){
+      var output = []
       if (dataAll) {
-        if (folder === '') {
-          return dataAll
-        } else {
+        if (folder !== '') {
           if (dataAll.hasOwnProperty(folder)) {
-            return dataAll[folder]
-          } else {
-            if (dataAll.hasOwnProperty(this.ifNoData)) {
-              return dataAll[this.ifNoData]
+            for (i = 0; i < Object.keys(dataAll[folder]).length; i++) { 
+              output.push(dataAll[folder][i])
             }
-            return {}
+          } else {
+            if (dataAll.hasOwnProperty(this.default)) {
+              for (i = 0; i < Object.keys(dataAll[this.default]).length; i++) { 
+                output.push(dataAll[this.default][i])
+              }
+            }
           }
         }
-      } else {
-        return {}
-      }
+      } 
+      return output
     },
     setData: function(dataAll,folder){
       dataAll = this.dataAll
@@ -81,7 +80,7 @@
         }
       
         if (!this.dataAll.hasOwnProperty(folder)) {
-          this.dataAll[folder] = {}
+          this.dataAll[folder] = []
         }
         
         this.dataAll[folder] = this.data
@@ -107,3 +106,4 @@
   })
 })()
 </script>
+
