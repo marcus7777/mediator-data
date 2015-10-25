@@ -45,6 +45,7 @@
     },
     syncData: function(asArray, folder) {
       if (asArray.path.indexOf('asArray.#') !== -1) {
+        if (!this.data) this.data = {}
         var keys = Object.keys(this.data)
         var key = asArray.path.replace('asArray.#','') * 1
         console.log(key)
