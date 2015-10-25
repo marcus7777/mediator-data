@@ -9,7 +9,7 @@
 <dom-module id="mediator-data">
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
-    <iron-ajax id="set" method="PUT" content-type="application/json" url="{{setDataUrl}}" ></iron-ajax>
+    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
     <!-- <iron-localstorage name="{{folder}}" value="{{localStorage}}">
     </iron-localstorage> -->
   </template>
@@ -113,6 +113,7 @@
       data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
       
       if (data) {
+        this.$.set.headers = {content-type:"application/json"}
         this.$.set.body = data
         this.$.set.generateRequest()
       }
