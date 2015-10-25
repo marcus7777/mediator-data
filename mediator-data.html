@@ -47,11 +47,17 @@
       if (asArray.path.indexOf('asArray.#') !== -1) {
         if (!this.data) this.data = {}
         var keys = Object.keys(this.data)
-        var key = asArray.path.replace('asArray.#','') * 1
+        var re = /(?:asArray\.#)([0-9]*)/; 
+        var key = re.exec(asArray.path)[1] * 1
+        var re2 = /(?:asArray\.#)(?:[0-9]*)\.(.*)/;
+        var innerKey = ''
+        if (re2.test(asArray.path)) {
+          innerKey = '.'+re2.exec(asArray.path)[1]
+        }
         console.log(key)
         if (this.asArray.hasOwnProperty(key)) {
           
-          this.set('dataAll.'+folder.replace('/','.')+'.'+keys[key], asArray.value)
+          this.set('dataAll.'+folder.replace('/','.')+'.'+keys[key]+innerKey, asArray.value)
           
           if (!this.get('dataAll.'+folder.replace('/','.'), this)) {
             this.set('dataAll.'+folder.replace('/','.'), {})
