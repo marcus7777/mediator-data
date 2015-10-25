@@ -140,7 +140,7 @@
         } else {
           key = '' + num + ' '
         }
-        if (!data.hasOwnProperty(key)) {
+        if (!this.data.hasOwnProperty(key)) {
           this.set("data."+key, obj)
         } else {
           this.data[key+"-"+Math.floor(Math.random()*1000)] = obj
