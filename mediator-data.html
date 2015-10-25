@@ -141,19 +141,18 @@
         var key
       
         if (('' + num).length === 1) {
-          key = '00' + num + ' '
+          key = '00' + num
         } else if (('' + num).length === 2) {
-          key = '0' + num + ' '
-        } else {
-          key = '' + num + ' '
-        }
+          key = '0' + num
+        } 
+        
         if (!this.data.hasOwnProperty(key)) {
           this.set("data."+key, obj)
         } else {
           this.data[key+"-"+Math.floor(Math.random()*1000)] = obj
         }
       } else {
-        this.data = {"001 ": obj}
+        this.data = {"001": obj}
       }
     }
   })
