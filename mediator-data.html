@@ -69,7 +69,7 @@
     load: function (dataAll, folder, defaultFolder) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
         
-        var data = this.get('dataAll.'+folder.replace('/','.'), this)
+        var data = this.get('dataAll.'+folder.replace('/','.'), this) || this.get('dataAll.'+defaultFolder.replace('/','.'), this)
           
         if (data !== this.data) {
           if (Object.keys(data).length < 1) {
@@ -78,7 +78,9 @@
           } else {
             this.data = data
           }
-          
+          if (this.get('dataAll.'+folder.replace('/','.'), this) !== this.data) {
+            this.set('dataAll.'+folder.replace('/','.'), this.data)
+          }
           var asArray = objectToArray(this.data)
           if (asArray !== this.asArray) {
             this.asArray = asArray
