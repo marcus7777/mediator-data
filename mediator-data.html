@@ -28,7 +28,7 @@
       asArray: {notify: true, value: []}
     },
     observers: [
-      "load(dataAll.*, folder)",
+      "load(dataAll.*, folder, defaultFolder)",
       "setData(dataAll.*, folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
@@ -74,6 +74,7 @@
         if (data !== this.data) {
           if (Object.keys(data).length < 1) {
             this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
+            this.set('dataAll.'+folder.replace('/','.'), this.data)
           } else {
             this.data = data
           }
