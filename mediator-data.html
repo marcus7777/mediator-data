@@ -66,13 +66,18 @@
         }
       }
     },
-    load: function (dataAll, folder) {
+    load: function (dataAll, folder, defaultFolder) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
         
         var data = this.get('dataAll.'+folder.replace('/','.'), this)
           
         if (data !== this.data) {
-          this.data = data 
+          if (Object.keys(data).length < 1) {
+            this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
+          } else {
+            this.data = data
+          }
+          
           var asArray = objectToArray(this.data)
           if (asArray !== this.asArray) {
             this.asArray = asArray
