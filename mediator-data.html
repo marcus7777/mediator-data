@@ -54,19 +54,14 @@
         if (re2.test(asArray.path)) {
           innerKey = '.'+re2.exec(asArray.path)[1]
         }
-        console.log(key)
         if (this.asArray.hasOwnProperty(key)) {
-          
           this.set('dataAll.'+folder.replace('/','.')+'.'+keys[key]+innerKey, asArray.value)
-          
           if (!this.get('dataAll.'+folder.replace('/','.'), this)) {
             this.set('dataAll.'+folder.replace('/','.'), {})
           }
-          
           this.set('data.'+keys[key]+innerKey, asArray.value)
-          
         } else {
-          console.log("delit")
+          console.log("del it todo")
         }
       }
     },
