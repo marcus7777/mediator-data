@@ -64,6 +64,16 @@
         } else {
           console.log("del it todo")
         }
+      } else if (asArray.path === 'asArray.splices') {
+        var del = asArray.value.indexSplices[0].index
+        if (typeof del === 'number') {
+          var data = this.data
+          var keys = Object.keys(data)
+          delete(data[keys[del]])
+          this.set("data",data)
+          this.set("dataAll."+folder.replace('/','.'),data)
+          this.setData({},folder)
+        }
       }
     },
     load: function (dataAll, folder, defaultFolder) {
@@ -160,7 +170,6 @@
       }
     }
   })
-
 function objectToArray(data) {
   var output = []
   if (data) {
@@ -174,6 +183,5 @@ function objectToArray(data) {
   }
   return output
 }
-
 })()
 </script>
