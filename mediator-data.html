@@ -74,6 +74,26 @@
           this.set("dataAll."+folder.replace('/','.'),data)
           this.setData({},folder)
         }
+      } else if (asArray.path === 'asArray' && this.data) {
+        /* TODO 
+        var data = this.data
+        var keys = Object.keys(data)
+        var oldNum = keys.length
+        var newNum = asArray.base.length
+        
+        if (oldNum < newNum) { // adding
+          for (var i = 0; i < asArray.base.length; i++) {
+            if (asArray.base[i] !== data[keys[i]]) {
+              asArray.base[i] !== data[keys[i]]
+            }
+          }
+               
+          var data = this.data
+          var keys = Object.keys(data)
+          this.set("data",data)
+          this.set("dataAll."+folder.replace('/','.'),data)
+          this.setData({},folder)
+        } */
       }
     },
     load: function (dataAll, folder, defaultFolder) {
@@ -148,10 +168,11 @@
     },
     /** Add New Object to the folder */ 
     push: function(obj){
+      var data = this.data
+      var folder = this.folder
       
-      if (this.data) {
-      
-        var num = Object.keys(this.data).length + 1
+      if (data) {
+        var num = Object.keys(data).length + 1
         var key
       
         if (('' + num).length === 1) {
@@ -163,11 +184,14 @@
         if (!this.data.hasOwnProperty(key)) {
           this.set("data."+key, obj)
         } else {
-          this.data[key+"-"+Math.floor(Math.random()*1000)] = obj
+          data[key+"-"+Math.floor(Math.random()*1000)] = obj
         }
       } else {
-        this.data = {"001": obj}
+        data = {"001": obj}
       }
+      this.set("data",data)
+      this.set("dataAll."+folder.replace('/','.'),data)
+      this.setData({},folder)
     }
   })
 function objectToArray(data) {
