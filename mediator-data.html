@@ -35,7 +35,27 @@
       "syncData(asArray.*, folder)"
     ],
     syncDataAll: function(data) {
+      var obj = this.folder.split('/')
+      // alert(obj)
+      if (obj.length !== 1 && !this.dataAll[obj[0]]) {
+        this.dataAll[obj[0]] = {}
+      }
+      if (obj.length > 1) {
+        if (obj.length === 2) {
+          this.dataAll[obj[0]][obj[1]] = data.base
+        } else if (!this.dataAll[obj[0]][obj[1]]) {
+          this.dataAll[obj[0]][obj[1]] = {}
+        }
+        if (obj.length > 2) {
+          if (obj.length === 3) {
+            this.dataAll[obj[0]][obj[1]][obj[2]] = data.base
+          } else if (!this.dataAll[obj[0]][obj[1]][obj[2]]) {
+            this.dataAll[obj[0]][obj[1]][obj[2]] = {}
+          }
+        }
+      }
       
+      // TODO make work a.b.c.d
       this.set('dataAll.'+this.folder.replace('/','.'), data.base)
     },
     syncAsArray: function(data) {
