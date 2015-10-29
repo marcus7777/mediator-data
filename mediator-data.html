@@ -37,7 +37,7 @@
     syncDataAll: function(data) {
       var obj = this.folder.split('/')
       // alert(obj)
-      if (obj.length !== 1 && !this.dataAll[obj[0]]) {
+      if (obj.length !== 1 && !this.dataAll.hasOwnProperty(obj[0])) {
         this.dataAll[obj[0]] = {}
       }
       if (obj.length > 1) {
