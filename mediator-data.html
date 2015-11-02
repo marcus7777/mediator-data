@@ -26,7 +26,7 @@
       folder: {type: String, value: 'data'},
       data: {notify: true},
       asArray: {notify: true, value: []},
-      sync:String
+      sync: {value: [], type: Array}
     },
     observers: [
       "load(dataAll.*, folder, defaultFolder, sync)",
@@ -126,7 +126,7 @@
           if (Object.keys(data).length < 1) {
             this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
             this.set('dataAll.'+folder.replace('/','.'), this.data)
-          } else if ( sync !== "") {
+          } else if ( sync.length !== 0) {
             this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync)
           } else {
             this.data = data
@@ -217,33 +217,38 @@
       this.setData({},folder)
     }
   })
-function addUniques(data, _default, sync) {
-  var output = data
-  var key 
-  if (_default) {
-    var keys = Object.keys(data)
-    var defaultKeys = Object.keys(_default)
-    for (var i = 0; i < defaultKeys.length; i++) {
-      key = defaultKeys[i] 
-      if (!keys.indexOf(key)) {
-        output[key][sync] = _default[key][sync];
+  
+  function addUniques(data, _default, sync) {
+    var output = data
+    var key 
+    if (_default) {
+      var keys = Object.keys(data)
+      var defaultKeys = Object.keys(_default)
+      for (var i = 0; i < defaultKeys.length; i++) {
+        key = defaultKeys[i] 
+        if (!keys.indexOf(key)) {
+          for (var s = 0; s < defaultKeys.length; s++) {
+            output[key][sync[s]] = _default[key][sync[s]]
+          }
+        }
       }
     }
+    return output
   }
-  return output
-}
-function objectToArray(data) {
-  var output = []
-  if (data) {
-    var keys = Object.keys(data)
-    for (var i = 0; i < keys.length; i++) {
-    //  if ((typeof data[keys[i]] === "object") && (data[keys[i]] !== null)) {
-    //    data[keys[i]]._key = keys[i]
-    //  }
-      output.push(data[keys[i]])
+
+  function objectToArray(data) {
+    var output = []
+    if (data) {
+      var keys = Object.keys(data)
+      for (var i = 0; i < keys.length; i++) {
+      //  if ((typeof data[keys[i]] === "object") && (data[keys[i]] !== null)) {
+      //    data[keys[i]]._key = keys[i]
+      //  }
+        output.push(data[keys[i]])
+      }
     }
+    return output
   }
-  return output
-}
+  
 })()
 </script>
