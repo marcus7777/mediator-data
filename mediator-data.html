@@ -220,9 +220,9 @@
 function addUniques(data, _default, sync) {
   var output = data
   var key 
-  if (default) {
+  if (_default) {
     var keys = Object.keys(data)
-    var defaultKeys = Object.keys(default)
+    var defaultKeys = Object.keys(_default)
     for (var i = 0; i < defaultKeys.length; i++) {
       key = defaultKeys[i] 
       if (!keys.indexOf(key)) {
