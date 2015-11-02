@@ -25,10 +25,11 @@
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String, value: 'data'},
       data: {notify: true},
-      asArray: {notify: true, value: []}
+      asArray: {notify: true, value: []},
+      sync:String
     },
     observers: [
-      "load(dataAll.*, folder, defaultFolder)",
+      "load(dataAll.*, folder, defaultFolder, sync)",
       "setData(dataAll.*, folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
@@ -116,7 +117,7 @@
         } */
       }
     },
-    load: function (dataAll, folder, defaultFolder) {
+    load: function (dataAll, folder, defaultFolder, sync) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
         
         var data = this.get('dataAll.'+folder.replace('/','.'), this) || this.get('dataAll.'+defaultFolder.replace('/','.'), this)
@@ -125,6 +126,8 @@
           if (Object.keys(data).length < 1) {
             this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
             this.set('dataAll.'+folder.replace('/','.'), this.data)
+          } else if ( sync !== "") {
+            this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync)
           } else {
             this.data = data
           }
@@ -214,6 +217,21 @@
       this.setData({},folder)
     }
   })
+function addUniques(data, default, sync) {
+  var output = data
+  var key 
+  if (default) {
+    var keys = Object.keys(data)
+    var defaultKeys = Object.keys(default)
+    for (var i = 0; i < defaultKeys.length; i++) {
+      key = defaultKeys[i] 
+      if (!keys.indexOf(key)) {
+        output[key][sync] = default[key][sync];
+      }
+    }
+  }
+  return output
+}
 function objectToArray(data) {
   var output = []
   if (data) {
