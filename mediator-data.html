@@ -20,20 +20,22 @@
     is: 'mediator-data',
     properties: {
       dataUrl: {computed:'getDataUrl(location)'},
-      setDataUrl: {computed:'getSetDataUrl(location, folder)'},
+      setDataUrl: {computed:'getSetDataUrl(location, _folder)'},
       location: {type: String, value: 'https://mediator-data.firebaseio-demo.com/'},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String, value: 'data'},
       data: {notify: true},
       asArray: {notify: true, value: []},
-      sync: {value: [], type: Array}
+      editDefault: Boolean,
+      sync: {value: [], type: Array},
+      _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
     },
     observers: [
-      "load(dataAll.*, folder, defaultFolder, sync)",
-      "setData(dataAll.*, folder)",
+      "load(dataAll.*, _folder, defaultFolder, sync)",
+      "setData(dataAll.*, _folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
-      "syncData(asArray.*, folder)"
+      "syncData(asArray.*, _folder)"
     ],
     syncDataAll: function(data) {
       var obj = this.folder.split('/')
@@ -149,6 +151,13 @@
         return location + "/.json"
       } else {
         return location
+      }
+    },
+    get_folder(editDefault, defaultFolder, folder){
+      if (editDefault) {
+        return folder
+      } else {
+        return defaultFolder
       }
     },
     getData: function(dataAll, folder){
