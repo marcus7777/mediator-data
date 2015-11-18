@@ -26,7 +26,7 @@
       folder: {type: String, value: 'data'},
       data: {notify: true},
       asArray: {notify: true, value: []},
-      editDefault: Boolean,
+      editDefault:{type: Boolean, value: false},
       sync: {value: [], type: Array},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
     },
