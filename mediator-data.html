@@ -38,7 +38,7 @@
       "syncData(asArray.*, _folder)"
     ],
     syncDataAll: function(data) {
-      var obj = this.folder.split('/')
+      var obj = this._folder.split('/')
       // alert(obj)
       if (obj.length !== 1 && !this.dataAll.hasOwnProperty(obj[0])) {
         this.dataAll[obj[0]] = {}
@@ -59,7 +59,7 @@
       }
       
       // TODO make work a.b.c.d
-      this.set('dataAll.'+this.folder.replace('/','.'), data.base)
+      this.set('dataAll.'+this._folder.replace('/','.'), data.base)
     },
     syncAsArray: function(data) {
       var asA = objectToArray(data.base)
@@ -201,7 +201,7 @@
     /** Add New Object to the folder */ 
     push: function(obj){
       var data = this.data
-      var folder = this.folder
+      var folder = this._folder
       
       if (data) {
         var num = Object.keys(data).length + 1
