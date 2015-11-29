@@ -22,7 +22,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
     "firebase-element": "GoogleWebComponents/firebase-element#^1.0.0",
-    "pouchdb": "pouchdb/pouchdb",
+    "pouchdb": "pouchdb/pouchdb#^5.1.0",
     "clone-data": "marcus7777/clone-data"
   },
   "devDependencies": {
