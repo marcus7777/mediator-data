@@ -235,7 +235,7 @@
       for (var i = 0; i < defaultKeys.length; i++) {
         key = defaultKeys[i] 
         if (!keys.indexOf(key)) {
-          for (var s = 0; s < defaultKeys.length; s++) {
+          for (var s = 0; s < sync.length; s++) {
             output[key][sync[s]] = _default[key][sync[s]]
           }
         }
