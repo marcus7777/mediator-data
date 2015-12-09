@@ -236,6 +236,7 @@
         key = defaultKeys[i] 
         if (keys.indexOf(key) === -1) {
           for (var s = 0; s < sync.length; s++) {
+            output[key] = {}
             output[key][sync[s]] = _default[key][sync[s]]
           }
         }
