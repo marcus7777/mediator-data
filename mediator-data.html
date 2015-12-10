@@ -11,9 +11,7 @@
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
     <pouch-db name="{{dataUrl}}" data="{{dataAll}}"></pouch-db>
-    <template is="dom-if" if="{{log}}">
-      <iron-ajax id="log" method="POST" url="{{logTo}}" ></iron-ajax>
-    </template>
+    <iron-ajax id="log" method="POST" url="{{logTo}}" ></iron-ajax>
   </template>
 </dom-module>
 <script>
