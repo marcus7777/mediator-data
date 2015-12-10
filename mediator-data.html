@@ -11,6 +11,9 @@
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
     <pouch-db name="{{dataUrl}}" data="{{dataAll}}"></pouch-db>
+    <template is="dom-if" if="{{log}}">
+      <iron-ajax id="log" method="POST" url="{{logTo}}" ></iron-ajax>
+    </template>
   </template>
 </dom-module>
 <script>
@@ -183,6 +186,11 @@
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = data
         this.$.set.generateRequest()
+      }
+      If (this.log) {
+        this.$.log.headers = {'content-type':'application/json'}
+        this.$.log.body = {data: data,time: date()}
+        this.$.log.generateRequest()
       }
     },
     getSetDataUrl: function(location,folder) {
