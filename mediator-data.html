@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <!-- <pouch-db name="{{dataUrl}}" data="{{dataAll}}"></pouch-db> -->
+    <pouch-db name="{{dataUrl}}" data="{{dataAll}}"></pouch-db>
     <iron-ajax id="log" method="POST" url="{{logTo}}" ></iron-ajax>
   </template>
 </dom-module>
