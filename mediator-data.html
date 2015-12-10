@@ -187,7 +187,7 @@
         this.$.set.body = data
         this.$.set.generateRequest()
       }
-      If (this.log) {
+      if (this.log) {
         this.$.log.headers = {'content-type':'application/json'}
         this.$.log.body = {data: data,time: date()}
         this.$.log.generateRequest()
