@@ -187,7 +187,7 @@
       }
       if (this.log) {
         this.$.log.headers = {'content-type':'application/json'}
-        this.$.log.body = {data: data,time: date()}
+        this.$.log.body = {data: data,time: new Date()}
         this.$.log.generateRequest()
       }
     },
