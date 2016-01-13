@@ -196,11 +196,11 @@
         this.$.set.body = data
         this.$.set.generateRequest()
       }
-      if (this.log) {
-        this.$.log.headers = {'content-type':'application/json'}
-        this.$.log.body = {data: data,time: new Date()}
-        this.$.log.generateRequest()
-      }
+      //if (this.log) {
+      //  this.$.log.headers = {'content-type':'application/json'}
+      //  this.$.log.body = {data: data,time: new Date()}
+      //  this.$.log.generateRequest()
+      //}
     },
     getSetDataUrl: function(location,folder) {
       if (location.substring(location.length - 1) === '/') {
