@@ -40,7 +40,7 @@
     localLoad: function(savedData) {
       console.log("savedData",savedData)
       if (!this.data) {
-        this.data = savedData
+        this.set("data", savedData)
       }
     },
     syncDataAll: function(data) {
