@@ -183,8 +183,8 @@
     setData: function(dataAll,folder){
       data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
       
-      if (data && Performance.now() > 10000) {
-        console.log(Performance.now())
+      if (data && performance.now() > 10000) {
+        console.log(performance.now())
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = data
         this.$.set.generateRequest()
