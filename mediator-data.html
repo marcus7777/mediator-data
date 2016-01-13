@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <pouch-db name="{{dataUrl}}" data="{{dataAll}}"></pouch-db>
+    <pouch-db name="{{dataUrl}}" data="{{dataAll}}" savedData="{{savedData}}"></pouch-db>
     <iron-ajax 
       id="log"      
       handle-as="json"
@@ -42,8 +42,14 @@
       "setData(dataAll.*, _folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
-      "syncData(asArray.*, _folder)"
+      "syncData(asArray.*, _folder)",
+      "localLoad(savedData)"
     ],
+    localLoad: function(savedData) {
+      if (!this.data) {
+        this.data = savedData
+      }
+    },
     syncDataAll: function(data) {
       var obj = this._folder.split('/')
       // alert(obj)
