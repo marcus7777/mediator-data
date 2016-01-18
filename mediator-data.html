@@ -95,15 +95,19 @@
           console.log("del it todo")
         }
       } else if (asArray.path === 'asArray.splices') {
-        var del = asArray.value.indexSplices[0].index
-        if (typeof del === 'number') {
-          var data = this.data
-          var keys = Object.keys(data)
-          if (delete(data[keys[del]]) !== 0) {
-            this.set("data",data)
-            this.set("dataAll."+folder.replace('/','.'),data)
-            this.setData({},folder)
+        if (asArray.value.keySplices[0].added.length !== 0) {
+          var del = asArray.value.indexSplices[0].index
+          if (typeof del === 'number') {
+           var data = this.data
+            var keys = Object.keys(data)
+            if (delete(data[keys[del]]) !== 0) {
+              this.set("data",data)
+              this.set("dataAll."+folder.replace('/','.'),data)
+              this.setData({},folder)
+            }
           }
+        } else {
+          asArray
         }
       } else if (asArray.path === 'asArray' && this.data) {
         /* TODO 
@@ -126,7 +130,7 @@
           this.setData({},folder)
         } */
       } else if (asArray.path === "asArray.length") {
-        
+        this.push(asArray.base[0])
       }
     },
     load: function (dataAll, folder, defaultFolder, sync) {
