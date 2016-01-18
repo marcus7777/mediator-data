@@ -107,7 +107,7 @@
             }
           }
         } else {
-          asArray
+          this.push(asArray.base[0])
         }
       } else if (asArray.path === 'asArray' && this.data) {
         /* TODO 
@@ -130,7 +130,7 @@
           this.setData({},folder)
         } */
       } else if (asArray.path === "asArray.length") {
-        this.push(asArray.base[0])
+        
       }
     },
     load: function (dataAll, folder, defaultFolder, sync) {
