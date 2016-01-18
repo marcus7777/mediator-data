@@ -95,7 +95,7 @@
           console.log("del it todo")
         }
       } else if (asArray.path === 'asArray.splices') {
-        if (asArray.value.keySplices[0].added.length !== 0) {
+        if (asArray.value.keySplices[0].added.length === 0) {
           var del = asArray.value.indexSplices[0].index
           if (typeof del === 'number') {
            var data = this.data
