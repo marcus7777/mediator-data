@@ -35,6 +35,7 @@
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
       "syncData(asArray.*, _folder)",
+      "dataAllTest(dataAll)",
       "localLoad(savedData)"
     ],
     localLoad: function(savedData) {
@@ -98,10 +99,11 @@
         if (typeof del === 'number') {
           var data = this.data
           var keys = Object.keys(data)
-          delete(data[keys[del]])
-          this.set("data",data)
-          this.set("dataAll."+folder.replace('/','.'),data)
-          this.setData({},folder)
+          if (delete(data[keys[del]]) !== 0) {
+            this.set("data",data)
+            this.set("dataAll."+folder.replace('/','.'),data)
+            this.setData({},folder)
+          }
         }
       } else if (asArray.path === 'asArray' && this.data) {
         /* TODO 
@@ -239,6 +241,11 @@
       this.set("data",data)
       this.set("dataAll."+folder.replace('/','.'),data)
       this.setData({},folder)
+    },
+    dataAllTest: function(dataAll) {
+      if (!this.dataAll) {
+        this.dataAll = {}
+      }
     }
   })
   
