@@ -185,12 +185,18 @@
     },
     setData: function(dataAll,folder){
       data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
-      
-      if (data && performance.now() > 30000) { // setting data after 30 secs
-        console.log(performance.now())
-        this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = data
-        this.$.set.generateRequest()
+      if (performance.now() > 30000) {// setting data after 30 secs
+        if (data) { 
+          this.$.set.headers = {'content-type':'application/json'}
+          this.$.set.body = data
+          this.$.set.generateRequest()
+        } else {
+          if (this.data) { // todo look at
+            this.$.set.headers = {'content-type':'application/json'}
+            this.$.set.body = this.data
+            this.$.set.generateRequest()
+          }
+        }
       }
     },
     getSetDataUrl: function(location,folder) {
