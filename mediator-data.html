@@ -27,10 +27,11 @@
       asArray: {notify: true, value: []},
       editDefault:{type: Boolean, value: false},
       sync: {value: [], type: Array},
-      _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'}
+      _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
+      overWrite: {value:false, type: Boolean}
     },
     observers: [
-      "load(dataAll.*, _folder, defaultFolder, sync)",
+      "load(dataAll.*, _folder, defaultFolder, sync, overWrite)",
       "setData(dataAll.*, _folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
@@ -144,9 +145,15 @@
             this.set('dataAll.'+folder.replace('/','.'), this.data)
           } else if ( sync.length !== 0) {
             if (defaultFolder === "." ) {
-              this.data = addUniques(data,this.get('dataAll', this), sync)
+              if (overWrite) {
+                this.data = overWriteData(data,this.get('dataAll', this), sync)
+              } else {
+                this.data = addUniques(data,this.get('dataAll', this), sync)
+              }
             } else {
-              this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync)
+              // add overWrite
+              this.data = addUniques(data,this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
+              
             }
           } else {
             this.data = data
@@ -257,7 +264,7 @@
     }
   })
   
-  function addUniques(data, _default, sync) {
+  function addUniques(data, _default, sync, overWrite) {
     var output = data
     var key 
     if (_default) {
@@ -275,7 +282,25 @@
     }
     return output
   }
-
+  function overWriteData (data, _default, sync, overWrite) {
+    var output = data
+    var key 
+    if (_default) {
+      var keys = Object.keys(data)
+      var defaultKeys = Object.keys(_default)
+      for (var i = 0; i < defaultKeys.length; i++) {
+        key = defaultKeys[i] 
+        if (keys.indexOf(key) === -1) {
+          for (var s = 0; s < sync.length; s++) {
+            debugger;
+            output[key] = {}
+            output[key][sync[s]] = _default[key][sync[s]]
+          }
+        }
+      }
+    }
+    return output
+  }
   function objectToArray(data) {
     var output = []
     if (data) {
