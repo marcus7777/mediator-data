@@ -144,7 +144,7 @@
             this.set('dataAll.'+folder.replace('/','.'), this.data)
           } else if ( sync.length !== 0) {
             if (defaultFolder === "." ) {
-              this.data = addUniques(data,this.get('dataAll, this), sync)
+              this.data = addUniques(data,this.get('dataAll', this), sync)
             } else {
               this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync)
             }
