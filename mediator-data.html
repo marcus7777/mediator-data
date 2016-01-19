@@ -134,7 +134,7 @@
         
       }
     },
-    load: function (dataAll, folder, defaultFolder, sync) {
+    load: function (dataAll, folder, defaultFolder, sync, overWrite) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
         
         var data = this.get('dataAll.'+folder.replace('/','.'), this) || this.get('dataAll.'+defaultFolder.replace('/','.'), this)
