@@ -30,7 +30,7 @@
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'}
     },
     observers: [
-      "load(dataAll.*, _folder, defaultFolder, sync.*)",
+      "load(dataAll.*, _folder, defaultFolder, sync)",
       "setData(dataAll.*, _folder)",
       "syncDataAll(data.*)",
       "syncAsArray(data.*)",
@@ -142,8 +142,8 @@
           if (Object.keys(data).length < 1) {
             this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
             this.set('dataAll.'+folder.replace('/','.'), this.data)
-          } else if ( sync.base.length !== 0) {
-            this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync.base)
+          } else if ( sync.length !== 0) {
+            this.data = addUniques(data,this.get('dataAll.'+defaultFolder.replace('/','.'), this), sync)
           } else {
             this.data = data
           }
