@@ -66,7 +66,6 @@
           }
         }
       }
-      
       // TODO make work a.b.c.d
       this.set('dataAll.'+this._folder.replace('/','.'), data.base)
     },
@@ -201,7 +200,7 @@
         return {}
       }
     },
-    setData: function(dataAll,folder){
+    setData: function(dataAll, folder){
       data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
       if (performance.now() > 30000) {// setting data after 30 secs
         if (data) { 
@@ -267,16 +266,23 @@
   
   function addUniques(data, _default, sync, overWrite) {
     var output = data
-    var key 
     if (_default) {
-      var keys = Object.keys(data)
-      var defaultKeys = Object.keys(_default)
-      for (var i = 0; i < defaultKeys.length; i++) {
-        key = defaultKeys[i] 
-        if (keys.indexOf(key) === -1) {
-          for (var s = 0; s < sync.length; s++) {
-            output[key] = {}
-            output[key][sync[s]] = _default[key][sync[s]]
+      for (item in data) {
+        var gotIt = false
+        for (defaultItem in _default) {
+          for (syncItem in sync) {
+            if (item[syncItem] && defaultItem[syncItem]) {
+              if (item[syncItem] === defaultItem[syncItem]) {
+                gotIt = true
+              }
+            } 
+          }
+        }
+        if (!gotIt) {
+          for (syncItem in sync) {
+            if (defaultItem[syncItem]) {
+              output[syncItem] === defaultItem[syncItem]
+            }
           }
         }
       }
@@ -320,6 +326,5 @@
     }
     return output
   }
-  
 })()
 </script>
