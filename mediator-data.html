@@ -269,13 +269,11 @@
           for (key in data) {
             var item = data[key]
             for (syncKey in sync) {
-              syncItem = sync[syncKey]
+              var syncItem = sync[syncKey]
               if (item[syncItem] && defaultItem[syncItem]) {
                 if (item[syncItem] === defaultItem[syncItem]) {
                   gotToGet = gotToGet - 1
                 }
-              } else {
-                gotToGet = 0;
               }
             }
           }
