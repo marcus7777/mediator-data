@@ -185,8 +185,8 @@
       }
     },
     setData: function(dataAll, folder){
-      data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
       if (performance.now() > 30000) {// setting data after 30 secs
+        data = JSON.stringify(this.get('dataAll.'+folder.replace('/','.'), this))
         if (data) { 
           this.$.set.headers = {'content-type':'application/json'}
           this.$.set.body = data
