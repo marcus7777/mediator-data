@@ -251,27 +251,22 @@
   function addUniques(data, _default, sync, overWrite) {
     var output = data
     if (_default && Array.isArray(sync)) {
-      for (key in data) {
-        item = data[key]
-        for (defaultKey in _default) {
-          defaultItem = _default[defaultKey]
-          var gotToGet = sync.length
+      for (defaultKey in _default) {
+        defaultItem = _default[defaultKey]
+        var gotToGet = sync.length
+        for (key in data) {
+          var item = data[key]
           for (syncKey in sync) {
             syncItem = sync[syncKey]
             if (item[syncItem] && defaultItem[syncItem]) {
               if (item[syncItem] === defaultItem[syncItem]) {
-                gotToGet = gotToGet -1
+                gotToGet = gotToGet - 1
               }
             }
           }
-          if (gotToGet !== 0) {
-            for (syncKey in sync) {
-              syncItem = sync[syncKey]
-              if (defaultItem[syncItem]) {
-                output[key][syncItem] === defaultItem[syncItem]
-              }
-            }
-          }
+        }
+        if (gotToGet !== 0) {
+          output.push(defaultItem)
         }
       }
     }
