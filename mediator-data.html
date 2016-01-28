@@ -246,7 +246,9 @@
         data = {"001": obj}
       }
       this.set("data",data)
+      this.set("asArray",objectToArray(data))
       this.set("dataAll."+folder.replace('/','.'),data)
+      
       this.setData({},folder)
     },
     dataAllTest: function(dataAll) {
