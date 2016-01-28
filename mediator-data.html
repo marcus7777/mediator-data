@@ -235,7 +235,7 @@
           key = '0' + num
         } 
         
-        if (!this.data.hasOwnProperty(key)) {
+        if (!data.hasOwnProperty(key)) {
           this.set("data."+key, obj)
         } else {
           data[key+"-"+Math.floor(Math.random()*1000)] = obj
