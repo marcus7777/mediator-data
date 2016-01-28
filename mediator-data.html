@@ -245,33 +245,33 @@
       if (!this.dataAll) {
         this.dataAll = {}
       }
-    }
-  })
-  
-  function addUniques(data, _default, sync, overWrite) {
-    var output = data
-    if (_default && Array.isArray(sync)) {
-      for (defaultKey in _default) {
-        defaultItem = _default[defaultKey]
-        var gotToGet = sync.length
-        for (key in data) {
-          var item = data[key]
-          for (syncKey in sync) {
-            syncItem = sync[syncKey]
-            if (item[syncItem] && defaultItem[syncItem]) {
-              if (item[syncItem] === defaultItem[syncItem]) {
-                gotToGet = gotToGet - 1
+    },
+    addUniques: function(data, _default, sync, overWrite) {
+      var output = data
+      if (_default && Array.isArray(sync)) {
+        for (defaultKey in _default) {
+          defaultItem = _default[defaultKey]
+          var gotToGet = sync.length
+          for (key in data) {
+            var item = data[key]
+            for (syncKey in sync) {
+              syncItem = sync[syncKey]
+              if (item[syncItem] && defaultItem[syncItem]) {
+                if (item[syncItem] === defaultItem[syncItem]) {
+                  gotToGet = gotToGet - 1
+                }
               }
             }
           }
-        }
-        if (gotToGet !== 0) {
-          output.push(defaultItem)
+          if (gotToGet !== 0) {
+            this.push(defaultItem)
+          }
         }
       }
+      return output
     }
-    return output
-  }
+  })
+  
   function overWriteData (data, _default, sync, overWrite) {
     var output = data
     var key 
