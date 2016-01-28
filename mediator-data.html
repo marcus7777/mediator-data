@@ -174,9 +174,7 @@
     },
     getData: function(dataAll, folder){
       if (!this.data) {
-        if (dataAll.hasOwnProperty(folder)) {
-          this.set("data",dataAll[folder])
-        }
+        this.set("data",this.get('dataAll.'+folder.replace('/','.'), this))
       }
       if (dataAll) {
         if (folder === '') {
