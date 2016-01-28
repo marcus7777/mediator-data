@@ -252,20 +252,21 @@
     var output = data
     if (_default && Array.isArray(sync)) {
       for (item in data) {
-        for (defaultItem in _default) {
+        for (defaultKey in _default) {
+          defaultItem = _default[defaultKey]
           var gotToGet = sync.length
-          for (syncItem in sync) {
-            if (item[syncItem] && defaultItem[syncItem]) {
-              if (item[syncItem] === defaultItem[syncItem]) {
+          for (syncKey in sync) {
+            if (item[syncKey] && defaultItem[syncKey]) {
+              if (item[syncKey] === defaultItem[syncKey]) {
                 gotToGet = gotToGet -1
               }
             } 
           }
         }
         if (gotToGet === 0) {
-          for (syncItem in sync) {
-            if (defaultItem[syncItem]) {
-              output[syncItem] === defaultItem[syncItem]
+          for (syncKey in sync) {
+            if (defaultItem[syncKey]) {
+              output[syncKey] === defaultItem[syncKey]
             }
           }
         }
