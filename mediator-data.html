@@ -256,17 +256,19 @@
           defaultItem = _default[defaultKey]
           var gotToGet = sync.length
           for (syncKey in sync) {
-            if (item[syncKey] && defaultItem[syncKey]) {
-              if (item[syncKey] === defaultItem[syncKey]) {
+            syncItem = sync[syncKey]
+            if (item[syncItem] && defaultItem[syncItem]) {
+              if (item[syncItem] === defaultItem[syncItem]) {
                 gotToGet = gotToGet -1
               }
-            } 
+            }
           }
         }
         if (gotToGet === 0) {
           for (syncKey in sync) {
-            if (defaultItem[syncKey]) {
-              output[syncKey] === defaultItem[syncKey]
+            syncItem = sync[syncKey]
+            if (defaultItem[syncItem]) {
+              output[syncItem] === defaultItem[syncItem]
             }
           }
         }
