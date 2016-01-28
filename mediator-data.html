@@ -274,8 +274,11 @@
                 if (item[syncItem] === defaultItem[syncItem]) {
                   gotToGet = gotToGet - 1
                 }
+              } else {
+                gotToGet = 0
               }
             }
+            
           }
           if (gotToGet !== 0) {
             this.push(defaultItem)
