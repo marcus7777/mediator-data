@@ -132,12 +132,12 @@
               if (overWrite) {
                 this.data = overWriteData(data,this.get('dataAll', this), sync)
               } 
-              this.data = addUniques(data,this.get('dataAll', this), sync)
+              this.data = this.addUniques(data,this.get('dataAll', this), sync)
             } else {
               if (overWrite) {
                 this.data = overWriteData(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
               } 
-              this.data = addUniques(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
+              this.data = this.addUniques(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
             }
           } else {
             this.data = data
