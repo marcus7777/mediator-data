@@ -217,12 +217,13 @@
     /** Add New Object to the folder */ 
     push: function(obj){
       var data
+      var folder = this._folder
+      
       if (this.data) {
         data = this.data
       } else if (this.get('dataAll.'+folder.replace('/','.'), this)) {
         data = this.get('dataAll.'+folder.replace('/','.'), this)
       }
-      var folder = this._folder
       
       if (data) {
         var num = Object.keys(data).length + 1
