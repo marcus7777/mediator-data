@@ -111,25 +111,9 @@
           this.push(asArray.base.pop())
         }
       } else if (asArray.path === 'asArray' && this.data) {
-        /* TODO 
-        var data = this.data
-        var keys = Object.keys(data)
-        var oldNum = keys.length
-        var newNum = asArray.base.length
-        
-        if (oldNum < newNum) { // adding
-          for (var i = 0; i < asArray.base.length; i++) {
-            if (asArray.base[i] !== data[keys[i]]) {
-              asArray.base[i] !== data[keys[i]]
-            }
-          }
-               
-          var data = this.data
-          var keys = Object.keys(data)
-          this.set("data",data)
-          this.set("dataAll."+folder.replace('/','.'),data)
-          this.setData({},folder)
-        } */
+      /* 
+       * fires if all array is changed maybe other time too
+       */
       } else if (asArray.path === "asArray.length") {
         
       }
@@ -266,19 +250,19 @@
   
   function addUniques(data, _default, sync, overWrite) {
     var output = data
-    if (_default) {
+    if (_default && Array.isArray(sync)) {
       for (item in data) {
-        var gotIt = false
         for (defaultItem in _default) {
+          var gotToGet = sync.length
           for (syncItem in sync) {
             if (item[syncItem] && defaultItem[syncItem]) {
               if (item[syncItem] === defaultItem[syncItem]) {
-                gotIt = true
+                gotToGet = gotToGet -1
               }
             } 
           }
         }
-        if (!gotIt) {
+        if (gotToGet === 0) {
           for (syncItem in sync) {
             if (defaultItem[syncItem]) {
               output[syncItem] === defaultItem[syncItem]
