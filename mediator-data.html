@@ -251,7 +251,8 @@
   function addUniques(data, _default, sync, overWrite) {
     var output = data
     if (_default && Array.isArray(sync)) {
-      for (item in data) {
+      for (key in data) {
+        item = data[key]
         for (defaultKey in _default) {
           defaultItem = _default[defaultKey]
           var gotToGet = sync.length
