@@ -264,21 +264,24 @@
       var output = data
       if (_default && Array.isArray(sync)) {
         for (defaultKey in _default) {
-          defaultItem = _default[defaultKey]
-          var gotToGet = sync.length
-          for (key in data) {
-            var item = data[key]
-            for (syncKey in sync) {
-              var syncItem = sync[syncKey]
-              if (item[syncItem] && defaultItem[syncItem]) {
-                if (item[syncItem] === defaultItem[syncItem]) {
-                  gotToGet = gotToGet - 1
+          if (_default.hasOwnProperty(defaultKey)) {
+            defaultItem = _default[defaultKey]
+            var gotToGet = sync.length
+            for (key in data) {
+              var item = data[key]
+              for (syncKey in sync) {
+                if (sync.hasOwnProperty(syncKey)) {
+                  var syncItem = sync[syncKey]
+                  if (item[syncItem] && defaultItem[syncItem]) {
+                    if (item[syncItem] === defaultItem[syncItem]) {
+                      gotToGet = gotToGet - 1
+                    }
+                  } else {
+                    gotToGet = 0
+                  }
                 }
-              } else {
-                gotToGet = 0
               }
             }
-            
           }
           if (gotToGet !== 0) {
             this.push(defaultItem)
