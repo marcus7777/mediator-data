@@ -46,6 +46,9 @@
       if (!this.dataAll) {
         this.set("dataAll", savedData)
       }
+      if (!this.data) {
+        this.set("data", this.get(this._folder.replace('/','.'), this.dataAll) || this.get(defaultFolder.replace('/','.'), this.dataAll))
+      }
     },
     syncDataAll: function(data) {
       var obj = this._folder.split('/')
