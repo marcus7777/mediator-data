@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <pouch-db name="{{dataId}}" data="{{data}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
+    <pouch-db name="{{dataUrl}}" data="{{dataAll}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
   </template>
 </dom-module>
 <script>
@@ -29,8 +29,7 @@
       editDefault:{type: Boolean, value: false},
       sync: {type: Array},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
-      overWrite: {value:false, type: Boolean},
-      dataId: {computed:'getDataId(_folder,dataUrl)'}
+      overWrite: {value:false, type: Boolean}
     },
     observers: [
       "load(dataAll.*, _folder, defaultFolder, sync, overWrite)",
@@ -47,8 +46,8 @@
     },
     localLoad: function(savedData) {
       console.log("savedData",savedData)
-      if (!this.data) {
-        this.set("data", savedData)
+      if (!this.dataAll) {
+        this.set("dataAll", savedData)
       }
     },
     syncDataAll: function(data) {
