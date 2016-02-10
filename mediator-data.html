@@ -32,7 +32,7 @@
       overWrite: {value:false, type: Boolean},
       getUntilData: {value:false, type: Boolean}
     },
-    ready: {
+    ready: function(){
       if (this.getUntilData && !this.data) {
         this.$.local.load(this.dataUrl)
       }
