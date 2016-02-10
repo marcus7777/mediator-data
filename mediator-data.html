@@ -34,7 +34,7 @@
     },
     ready: {
       if (this.getUntilData && !this.data) {
-        this.$.local.reload()
+        this.$.local.load(this.dataUrl)
       }
     },
     observers: [
