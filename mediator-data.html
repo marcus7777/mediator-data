@@ -200,7 +200,7 @@
       }
     },
     setData: function(dataAll, folder){
-      if (performance.now() > 10000) {// setting data after 10 secs
+      if (performance.now() > 10000 || !this.data) {// setting data after 10 secs
         data = JSON.stringify(this.get(this._folder.replace('/','.'), this.dataAll) || this.get(this.defaultFolder.replace('/','.'), this.dataAll))
         if (data) { 
           this.$.set.headers = {'content-type':'application/json'}
@@ -209,7 +209,7 @@
         } else {
           if (this.data) { // todo look at
             this.$.set.headers = {'content-type':'application/json'}
-            this.$.set.body = this.data
+            this.$.set.body = JSON.stringify(this.data)
             this.$.set.generateRequest()
           }
         }
