@@ -15,6 +15,11 @@
 </dom-module>
 <script>
 ;(function () {
+  function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+  }
   Polymer({
     is: 'mediator-data',
     properties: {
@@ -124,9 +129,16 @@
       /* 
        * fires if all array is changed maybe other time too
        */
+        var output = {}
+        asArray.base.forEach(addOrderArrayElements)
+        function addArrayElements(element, index, array) {
+          output[pad(index, 3)] = element
+        }
+        this.set("data",output)
       } else if (asArray.path === "asArray.length") {
         
       }
+      
     },
     load: function (dataAll, folder, defaultFolder, sync, overWrite) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
@@ -243,13 +255,7 @@
       
       if (data) {
         var num = Object.keys(data).length + 1
-        var key
-      
-        if (('' + num).length === 1) {
-          key = '00' + num
-        } else if (('' + num).length === 2) {
-          key = '0' + num
-        } 
+        var key = pad(num,3)
         
         if (!data.hasOwnProperty(key)) {
           data[key] = obj
