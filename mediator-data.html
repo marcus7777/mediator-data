@@ -1,7 +1,7 @@
 <link rel="import" href="../pouch-db/pouch-db.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <!--
-`<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{data}}" folder="{{folder}}"></mediator-data>` 
+`<mediator-data location="https://mediator-data.firebaseio-demo.com" get-until-data data="{{data}}" folder="{{folder}}"></mediator-data>` 
 @demo demo.html todo and badges
 @demo badges.demo.html badges
 -->
@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <pouch-db name="{{dataUrl}}" data="{{dataAll}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
+    <pouch-db id="local" name="{{dataUrl}}" data="{{dataAll}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
   </template>
 </dom-module>
 <script>
@@ -29,7 +29,13 @@
       editDefault:{type: Boolean, value: false},
       sync: {type: Array},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
-      overWrite: {value:false, type: Boolean}
+      overWrite: {value:false, type: Boolean},
+      getUntilData: {value:false, type: Boolean}
+    },
+    ready: {
+      if (this.getUntilData && !this.data) {
+        this.$.local.reload()
+      }
     },
     observers: [
       "load(dataAll.*, _folder, defaultFolder, sync, overWrite)",
