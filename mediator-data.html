@@ -8,9 +8,10 @@
 
 <dom-module id="mediator-data">
   <template>
-    <iron-ajax auto url="{{dataUrl}}" last-response="{{dataAll}}"></iron-ajax>
+    <iron-ajax auto url="{{dataUrl}}" last-response="{{data}}"></iron-ajax>
+    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <pouch-db id="local" name="{{dataUrl}}" data="{{dataAll}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
+    <pouch-db id="local" name="{{dataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
   </template>
 </dom-module>
 <script>
@@ -25,11 +26,11 @@
     properties: {
       dataUrl: {computed:'getDataUrl(location)'},
       setDataUrl: {computed:'getSetDataUrl(location, _folder)'},
+      defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
       location: {type: String},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true},
-      dataAll: {notify: true},
       asArray: {notify: true, value: []},
       editDefault:{type: Boolean, value: false},
       sync: {type: Array},
@@ -42,13 +43,9 @@
       }
     },
     observers: [
-      "load(dataAll.*, _folder, defaultFolder, sync)",
-      "setData(dataAll.*, _folder)",
-      "getData(dataAll.*, _folder)",
-      "syncDataAll(data.*)",
+      "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*, _folder)",
-      "dataAllTest(dataAll)",
       "localLoad(savedLocal)"
     ],
     getDataId: function(_folder, dataUrl){
@@ -56,32 +53,9 @@
     },
     localLoad: function(savedData) {
       console.log("savedData",savedData)
-      if (!this.dataAll) {
-        this.set("dataAll", savedData)
+      if (!this.data) {
+        this.set("data", savedData)
       }
-    },
-    syncDataAll: function(data) {
-      var obj = this._folder.split('/')
-      // alert(obj)
-      if (obj.length !== 1 && !this.dataAll.hasOwnProperty(obj[0])) {
-        this.dataAll[obj[0]] = {}
-      }
-      if (obj.length > 1) {
-        if (obj.length === 2) {
-          this.dataAll[obj[0]][obj[1]] = data.base
-        } else if (!this.dataAll[obj[0]][obj[1]]) {
-          this.dataAll[obj[0]][obj[1]] = {}
-        }
-        if (obj.length > 2) {
-          if (obj.length === 3) {
-            this.dataAll[obj[0]][obj[1]][obj[2]] = data.base
-          } else if (!this.dataAll[obj[0]][obj[1]][obj[2]]) {
-            this.dataAll[obj[0]][obj[1]][obj[2]] = {}
-          }
-        }
-      }
-      // TODO make work a.b.c.d
-      this.set('dataAll.'+this._folder.replace('/','.'), data.base)
     },
     syncAsArray: function(data) {
       var asA = objectToArray(data.base)
@@ -101,10 +75,6 @@
           innerKey = '.'+re2.exec(asArray.path)[1]
         }
         if (this.asArray.hasOwnProperty(key)) {
-          this.set('dataAll.'+folder.replace('/','.')+'.'+keys[key]+innerKey, asArray.value)
-          if (!this.get('dataAll.'+folder.replace('/','.'), this)) {
-            this.set('dataAll.'+folder.replace('/','.'), {})
-          }
           this.set('data.'+keys[key]+innerKey, asArray.value)
         } else {
           console.log("del it todo")
@@ -117,7 +87,6 @@
             var keys = Object.keys(data)
             if (delete(data[keys[del]]) !== 0) {
               this.set("data",data)
-              this.set("dataAll."+folder.replace('/','.'),data)
               this.setData({},folder)
             }
           }
@@ -139,27 +108,19 @@
       }
       
     },
-    load: function (dataAll, folder, defaultFolder, sync) {
-      if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
-        
-        var data = this.get('dataAll.'+folder.replace('/','.'), this) || this.get('dataAll.'+defaultFolder.replace('/','.'), this)
-          
-        if (data !== this.data) {
-          if (Object.keys(data).length < 1) {
-            this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
-            this.set('dataAll.'+folder.replace('/','.'), this.data)
-          } else if ( sync.length !== 0) {
-            this.data = this.addUniques(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
-          } else {
-            this.data = data
-          }
-          if (this.get('dataAll.'+folder.replace('/','.'), this) !== this.data) {
-            this.set('dataAll.'+folder.replace('/','.'), this.data)
-          }
-          var asArray = objectToArray(this.data)
-          if (asArray !== this.asArray) {
-            this.asArray = asArray
-          }
+    load: function (data, defaultData, sync) {
+      var data = data || defaultData
+      if (data !== this.data) {
+        if (Object.keys(data).length < 1) {
+          debugger
+        } else if ( sync.length !== 0) {
+          this.data = this.addUniques(data, defaultData, sync)
+        } else {
+          this.data = data
+        }
+        var asArray = objectToArray(this.data)
+        if (asArray !== this.asArray) {
+          this.asArray = asArray
         }
       }
     },
@@ -180,31 +141,11 @@
         return folder
       }
     },
-    getData: function(dataAll, folder){
-      if (!this.data) {
-        this.set("data",this.get('dataAll.'+folder.replace('/','.'), this))
-      }
-      if (dataAll) {
-        if (folder === '') {
-          return false
-        } else {
-          if (dataAll.hasOwnProperty(folder)) {
-            return dataAll[folder]
-          } else {
-            return {}
-          }
-        }
-      } else {
-        return {}
-      }
-    },
-    setData: function(dataAll, folder){
-      this.data = this.get(this._folder.replace('/','.'), this.dataAll) || this.get(this.defaultFolder.replace('/','.'), this.dataAll)
+    setData: function(data, folder){
       if (performance.now() > 10000) {// setting data after 10 secs
-        var data = JSON.stringify(this.data)
         if (data) { 
           this.$.set.headers = {'content-type':'application/json'}
-          this.$.set.body = data
+          this.$.set.body = JSON.stringify(data)
           this.$.set.generateRequest()
         } else {
           if (this.data) { // todo look at
@@ -236,9 +177,7 @@
       
       if (this.data) {
         data = this.data
-      } else if (this.get('dataAll.'+folder.replace('/','.'), this)) {
-        data = this.get('dataAll.'+folder.replace('/','.'), this)
-      }
+      } 
       
       if (data) {
         var num = Object.keys(data).length + 1
@@ -254,14 +193,8 @@
       }
       this.set("data",data)
       this.set("asArray",objectToArray(data))
-      this.set("dataAll."+folder.replace('/','.'),data)
       
-      this.setData({},folder)
-    },
-    dataAllTest: function(dataAll) {
-      if (!this.dataAll) {
-        this.dataAll = {}
-      }
+      // this.setData({},folder)
     },
     addUniques: function(data, _default, sync) {
       var output = data
