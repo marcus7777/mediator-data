@@ -1,7 +1,7 @@
 <link rel="import" href="../pouch-db/pouch-db.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <!--
-`<mediator-data location="https://mediator-data.firebaseio-demo.com" get-until-data data="{{data}}" folder="{{folder}}"></mediator-data>` 
+`<mediator-data location="https://mediator-data.firebaseio-demo.com" data="{{data}}" folder="{{folder}}"></mediator-data>` 
 @demo demo.html todo and badges
 @demo badges.demo.html badges
 -->
@@ -34,7 +34,6 @@
       editDefault:{type: Boolean, value: false},
       sync: {type: Array},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
-      overWrite: {value:false, type: Boolean},
       getUntilData: {value:false, type: Boolean}
     },
     ready: function(){
@@ -43,7 +42,7 @@
       }
     },
     observers: [
-      "load(dataAll.*, _folder, defaultFolder, sync, overWrite)",
+      "load(dataAll.*, _folder, defaultFolder, sync)",
       "setData(dataAll.*, _folder)",
       "getData(dataAll.*, _folder)",
       "syncDataAll(data.*)",
@@ -140,7 +139,7 @@
       }
       
     },
-    load: function (dataAll, folder, defaultFolder, sync, overWrite) {
+    load: function (dataAll, folder, defaultFolder, sync) {
       if (dataAll.base !== null && Object.keys(dataAll.base).length > 0 && folder !== "" ) {
         
         var data = this.get('dataAll.'+folder.replace('/','.'), this) || this.get('dataAll.'+defaultFolder.replace('/','.'), this)
@@ -150,19 +149,7 @@
             this.data = this.get('dataAll.'+defaultFolder.replace('/','.'), this)
             this.set('dataAll.'+folder.replace('/','.'), this.data)
           } else if ( sync.length !== 0) {
-            if (defaultFolder === "." ) {
-              if (overWrite) {
-                this.data = overWriteData(data,this.get('dataAll', this), sync)
-              } else {
-                this.data = this.addUniques(data,this.get('dataAll', this), sync)
-              }
-            } else {
-              if (overWrite) {
-                this.data = overWriteData(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
-              } else {
-                this.data = this.addUniques(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
-              }
-            }
+            this.data = this.addUniques(data, this.get('dataAll.' + defaultFolder.replace('/','.'), this), sync)
           } else {
             this.data = data
           }
@@ -276,7 +263,7 @@
         this.dataAll = {}
       }
     },
-    addUniques: function(data, _default, sync, overWrite) {
+    addUniques: function(data, _default, sync) {
       var output = data
       if (_default && Array.isArray(sync)) {
         for (defaultKey in _default) {
@@ -308,30 +295,6 @@
     }
   })
   
-  function overWriteData (data, _default, sync, overWrite) {
-    var output = data
-    var key 
-    if (_default) {
-      var keys = Object.keys(data)
-      var defaultKeys = Object.keys(_default)
-      for (var i = 0; i < defaultKeys.length; i++) {
-        key = defaultKeys[i] 
-        if (keys.indexOf(key) !== -1) {
-          for (var s = 0; s < sync.length; s++) {
-            if (_default[key][sync[s]]) {
-              if (output[key]) {
-                output[key][sync[s]] = _default[key][sync[s]]
-              } else {
-                output[key] = {}
-                output[key][sync[s]] = _default[key][sync[s]]
-              }
-            }
-          }
-        }
-      }
-    }
-    return output
-  }
   function objectToArray(data) {
     var output = []
     if (data) {
