@@ -137,7 +137,7 @@
       }
     },
     setData: function(data, setDataUrl, savedData){
-      if (setDataUrl && data !== savedData) {
+      if (setDataUrl && data.base !== savedData) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(data.base)
         this.$.set.generateRequest()
