@@ -8,10 +8,12 @@
 
 <dom-module id="mediator-data">
   <template>
-    <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
     <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
+    <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
+  
     <pouch-db id="local" name="{{setDataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
+  
   </template>
 </dom-module>
 <script>
@@ -52,8 +54,7 @@
       return dataUrl+_folder
     },
     localLoad: function(savedData) {
-      console.log("savedData",savedData)
-      if (!this.data) {
+      if (!this.data && savedData) {
         this.set("data", savedData)
       }
     },
