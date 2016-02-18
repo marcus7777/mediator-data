@@ -137,12 +137,10 @@
       }
     },
     setData: function(data, folder){
-      if (performance.now() > 10000) {// setting data after 10 secs
-        if (data) { 
-          this.$.set.headers = {'content-type':'application/json'}
-          this.$.set.body = JSON.stringify(data)
-          this.$.set.generateRequest()
-        }
+      if (data) { 
+        this.$.set.headers = {'content-type':'application/json'}
+        this.$.set.body = JSON.stringify(data)
+        this.$.set.generateRequest()
       }
     },
     getSetDataUrl: function(location, folder) {
@@ -175,8 +173,8 @@
       } else {
         this.data = {"001": obj}
       }
-      this.set("data",data)
-      this.set("asArray",objectToArray(data))
+      this.set("data", data)
+      this.set("asArray", objectToArray(data))
     },
     addUniques: function(data, _default, sync) {
       var output = data
