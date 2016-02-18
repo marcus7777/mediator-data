@@ -143,12 +143,6 @@
           this.$.set.headers = {'content-type':'application/json'}
           this.$.set.body = JSON.stringify(data)
           this.$.set.generateRequest()
-        } else {
-          if (this.data) { // todo look at
-            this.$.set.headers = {'content-type':'application/json'}
-            this.$.set.body = JSON.stringify(this.data)
-            this.$.set.generateRequest()
-          }
         }
       }
     },
@@ -172,20 +166,16 @@
       var folder = this._folder
       
       if (this.data) {
-        data = this.data
-      } 
-      
-      if (data) {
-        var num = Object.keys(data).length + 1
+        var num = Object.keys(this.data).length + 1
         var key = pad(num,3)
         
-        if (!data.hasOwnProperty(key)) {
-          data[key] = obj
+        if (!this.data.hasOwnProperty(key)) {
+          this.data[key] = obj
         } else {
-          data[key+"-"+Math.floor(Math.random()*1000)] = obj
+          this.data[key+"-"+pad(Math.floor(Math.random()*10000),4)], = obj
         }
       } else {
-        data = {"001": obj}
+        this.data = {"001": obj}
       }
       this.set("data",data)
       this.set("asArray",objectToArray(data))
