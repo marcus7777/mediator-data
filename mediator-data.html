@@ -45,9 +45,6 @@
       "syncData(asArray.*, _folder)",
       "localLoad(savedLocal)"
     ],
-    getDataId: function(_folder, dataUrl){
-      return dataUrl+_folder
-    },
     localLoad: function(savedData) {
       if (!this.data && savedData) {
         this.set("data", savedData)
