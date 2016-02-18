@@ -118,7 +118,7 @@
           this.set("asArray", asArray)
         }
       }
-      this.gotData = data
+      this.gotData = JSON.stringify(data)
     },
     getDataUrl: function(location){
       if (location.substring(location.length - 1) === '/') {
@@ -138,7 +138,7 @@
       }
     },
     setData: function(data, setDataUrl, gotData){
-      if (setDataUrl && JSON.stringify(data.base) !== JSON.stringify(gotData)) {
+      if (setDataUrl && JSON.stringify(data.base) !== gotData) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(data.base)
         this.$.set.generateRequest()
