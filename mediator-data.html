@@ -105,7 +105,7 @@
       
     },
     load: function (data, defaultData, sync) {
-      var data = data || defaultData
+      data = data || defaultData
       if (data !== this.data) {
         if (sync.length !== 0) {
           this.set("data", this.addUniques(data, defaultData, sync))
@@ -117,8 +117,8 @@
         if (asArray !== this.asArray) {
           this.set("asArray", asArray)
         }
-        this.gotData = data
       }
+      this.gotData = data
     },
     getDataUrl: function(location){
       if (location.substring(location.length - 1) === '/') {
