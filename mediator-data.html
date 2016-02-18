@@ -52,7 +52,7 @@
       }
     },
     syncAsArray: function(data) {
-      if (data) {
+      if (data.base) {
         var asA = objectToArray(data.base)
         if (this.asArray !== asA) {
           this.asArray = asA
