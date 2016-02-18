@@ -52,9 +52,11 @@
       }
     },
     syncAsArray: function(data) {
-      var asA = objectToArray(data.base)
-      if (this.asArray !== asA) {
-        this.asArray = asA
+      if (data) {
+        var asA = objectToArray(data.base)
+        if (this.asArray !== asA) {
+          this.asArray = asA
+        }
       }
     },
     syncData: function(asArray, folder) {
