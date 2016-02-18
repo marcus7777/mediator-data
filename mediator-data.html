@@ -8,12 +8,13 @@
 
 <dom-module id="mediator-data">
   <template>
-    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
     <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
-    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
   
     <pouch-db id="local" name="{{setDataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
-  
+    
+    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
+    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
+    
   </template>
 </dom-module>
 <script>
