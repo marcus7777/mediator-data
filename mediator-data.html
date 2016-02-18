@@ -44,7 +44,7 @@
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*, _folder)",
-      "setData(data.*, setDataUrl, savedData)",
+      "setData(data.*, setDataUrl, gotData)",
       "localLoad(savedData)"
     ],
     localLoad: function(savedData) {
@@ -117,6 +117,7 @@
         if (asArray !== this.asArray) {
           this.set("asArray", asArray)
         }
+        this.gotData = data
       }
     },
     getDataUrl: function(location){
@@ -136,8 +137,8 @@
         return folder
       }
     },
-    setData: function(data, setDataUrl, savedData){
-      if (setDataUrl && JSON.stringify(data.base) !== JSON.stringify(savedData)) {
+    setData: function(data, setDataUrl, gotData){
+      if (setDataUrl && JSON.stringify(data.base) !== JSON.stringify(gotData)) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(data.base)
         this.$.set.generateRequest()
