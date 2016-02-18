@@ -46,7 +46,7 @@
       "localLoad(savedLocal)"
     ],
     localLoad: function(savedData) {
-      if (!this.data && savedData) {
+      if (!this.data && savedData && Object.keys(savedData).length !== 0) {
         this.set("data", savedData)
       }
     },
@@ -79,7 +79,7 @@
            var data = this.data
             var keys = Object.keys(data)
             if (delete(data[keys[del]]) !== 0) {
-              this.set("data",data)
+              this.set("data", data)
               this.setData({},folder)
             }
           }
