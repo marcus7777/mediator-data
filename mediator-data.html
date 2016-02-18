@@ -44,6 +44,7 @@
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*, _folder)",
+      "setData(data.*)",
       "localLoad(savedLocal)"
     ],
     localLoad: function(savedData) {
@@ -83,7 +84,6 @@
             var keys = Object.keys(data)
             if (delete(data[keys[del]]) !== 0) {
               this.set("data", data)
-              this.setData({},folder)
             }
           }
         } else {
@@ -136,12 +136,10 @@
         return folder
       }
     },
-    setData: function(data, folder){
-      if (data) { 
-        this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = JSON.stringify(data)
-        this.$.set.generateRequest()
-      }
+    setData: function(data){
+      this.$.set.headers = {'content-type':'application/json'}
+      this.$.set.body = JSON.stringify(data.base)
+      this.$.set.generateRequest()
     },
     getSetDataUrl: function(location, folder) {
       if (location.substring(location.length - 1) === '/') {
