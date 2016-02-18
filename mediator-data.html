@@ -10,7 +10,7 @@
   <template>
     <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
   
-    <pouch-db id="local" name="{{setDataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedLocal}}"></pouch-db>
+    <pouch-db id="local" name="{{setDataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedData}}"></pouch-db>
     
     <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
     <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
@@ -44,8 +44,8 @@
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*, _folder)",
-      "setData(data.*)",
-      "localLoad(savedLocal)"
+      "setData(data.*, setDataUrl, savedData)",
+      "localLoad(savedData)"
     ],
     localLoad: function(savedData) {
       if (!this.data && savedData && Object.keys(savedData).length !== 0) {
@@ -136,10 +136,12 @@
         return folder
       }
     },
-    setData: function(data){
-      this.$.set.headers = {'content-type':'application/json'}
-      this.$.set.body = JSON.stringify(data.base)
-      this.$.set.generateRequest()
+    setData: function(data, setDataUrl, savedData){
+      if (setDataUrl && data !== savedData) {
+        this.$.set.headers = {'content-type':'application/json'}
+        this.$.set.body = JSON.stringify(data.base)
+        this.$.set.generateRequest()
+      }
     },
     getSetDataUrl: function(location, folder) {
       if (location.substring(location.length - 1) === '/') {
