@@ -36,7 +36,7 @@
       data: {notify: true},
       asArray: {notify: true},
       editDefault:{type: Boolean, value: false},
-      sync: {type: Array},
+      sync: {type: Array, value []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean}
     },
