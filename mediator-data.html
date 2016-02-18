@@ -39,11 +39,6 @@
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean}
     },
-    ready: function(){
-      if (this.getUntilData && !this.data) {
-        this.$.local.load(this.dataUrl)
-      }
-    },
     observers: [
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
