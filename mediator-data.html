@@ -80,7 +80,7 @@
         if (asArray.value.keySplices[0].added.length === 0) {
           var del = asArray.value.indexSplices[0].index
           if (typeof del === 'number') {
-            var toDel = asArray.base[del-1]
+            var toDel = asArray.base[del]
             var keys = Object.keys(this.data)
             var copyTo = {}
             for (var index = 0; index < keys.length; index++) {
