@@ -78,13 +78,11 @@
         }
       } else if (asArray.path === 'asArray.splices') {
         if (asArray.value.keySplices[0].added.length === 0) {
-          if (typeof del === 'number') {
-            var copyTo = {}
-            for (var index = 0; index < asArray.base.length; index++) {
-              copyTo[pad(index,3)] === asArray.base[index]
-            }
-            this.set("data", copyTo)
+          var copyTo = {}
+          for (var index = 0; index < asArray.base.length; index++) {
+            copyTo[pad(index,3)] === asArray.base[index]
           }
+          this.set("data", copyTo)
         } else {
           this.push(asArray.base.pop())
         }
