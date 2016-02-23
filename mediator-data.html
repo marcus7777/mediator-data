@@ -43,7 +43,7 @@
     observers: [
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
-      "syncData(asArray.*, _folder)",
+      "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData)",
       "localLoad(savedData)"
     ],
@@ -60,7 +60,7 @@
         }
       }
     },
-    syncData: function(asArray, folder) {
+    syncData: function(asArray) {
       if (asArray.path.indexOf('asArray.#') !== -1) {
         if (!this.data) this.data = {}
         var keys = Object.keys(this.data)
