@@ -56,7 +56,7 @@
       if (data.base) {
         var asA = objectToArray(data.base)
         if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
-          this.asArray = asA
+          this.set("asArray", asA)
         }
       }
     },
