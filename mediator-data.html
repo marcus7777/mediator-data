@@ -55,7 +55,7 @@
     syncAsArray: function(data) {
       if (data.base) {
         var asA = objectToArray(data.base)
-        if (this.asArray !== asA) {
+        if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
           this.asArray = asA
         }
       }
