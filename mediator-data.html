@@ -78,15 +78,10 @@
         }
       } else if (asArray.path === 'asArray.splices') {
         if (asArray.value.keySplices[0].added.length === 0) {
-          var del = asArray.value.indexSplices[0].index
           if (typeof del === 'number') {
-            var toDel = asArray.base[del]
-            var keys = Object.keys(this.data)
             var copyTo = {}
-            for (var index = 0; index < keys.length; index++) {
-              if (JSON.stringify(toDel) !== JSON.stringify(this.data[keys[index]])) {
-                copyTo[keys[index]] === this.data[keys[index]]
-              }
+            for (var index = 0; index < asArray.base.length; index++) {
+              copyTo[pad(index,3)] === asArray.base[index]
             }
             this.set("data", copyTo)
           }
