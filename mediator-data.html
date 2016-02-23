@@ -130,7 +130,7 @@
         return location
       }
     },
-    get_folder(editDefault, defaultFolder, folder){
+    get_folder: function(editDefault, defaultFolder, folder){
       if (editDefault) {
         return defaultFolder
       } else {
@@ -174,7 +174,6 @@
         this.data = {"001": obj}
       }
       this.set("data", this.data)
-      this.set("asArray", objectToArray(this.data))
     },
     addUniques: function(data, _default, sync) {
       var output = data
