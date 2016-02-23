@@ -159,7 +159,6 @@
       }
     },
     push: function(obj){
-      var data
       var folder = this._folder
       
       if (this.data) {
@@ -174,8 +173,8 @@
       } else {
         this.data = {"001": obj}
       }
-      this.set("data", data)
-      this.set("asArray", objectToArray(data))
+      this.set("data", this.data)
+      this.set("asArray", objectToArray(this.data))
     },
     addUniques: function(data, _default, sync) {
       var output = data
