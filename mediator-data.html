@@ -80,11 +80,15 @@
         if (asArray.value.keySplices[0].added.length === 0) {
           var del = asArray.value.indexSplices[0].index
           if (typeof del === 'number') {
-           var data = this.data
-            var keys = Object.keys(data)
-            if (delete(data[keys[del]]) !== 0) {
-              this.set("data", data)
+            var toDel = asArray.base[del]
+            var keys = Object.keys(this.data)
+            var copyTo = {}
+            for (var index = 0; index < keys.length; index++) {
+              if (JSON.stringify(toDel) !== JSON.stringify(this.data[keys[del]]) {
+                copyTo[keys[del]] === this.data[keys[del]]
+              }
             }
+            this.set("data", copyTo)
           }
         } else {
           this.push(asArray.base.pop())
