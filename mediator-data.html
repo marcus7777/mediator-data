@@ -106,16 +106,11 @@
     },
     load: function (data, defaultData, sync) {
       data = data || defaultData
-      if (data !== this.data) {
+      if (JSON.stringify(data) !== JSON.stringify(this.data)) {
         if (sync.length !== 0) {
           this.set("data", this.addUniques(data, defaultData, sync))
         } else {
           this.set("data", data)
-        }
-        
-        var asArray = objectToArray(data)
-        if (asArray !== this.asArray) {
-          this.set("asArray", asArray)
         }
       }
       this.gotData = JSON.stringify(data)
