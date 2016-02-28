@@ -133,7 +133,7 @@
     setData: function(data, setDataUrl, gotData, keep){
       if (setDataUrl && JSON.stringify(data.base) !== gotData) {
         this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = JSON.stringify(this.$,local.dropData(data.base, keep))
+        this.$.set.body = JSON.stringify(this.$.local.dropData(data.base, keep))
         this.$.set.generateRequest()
       }
     },
