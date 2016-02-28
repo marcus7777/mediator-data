@@ -34,6 +34,7 @@
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true},
+      keep:{type: Array, value: ["local"]},
       asArray: {notify: true},
       editDefault:{type: Boolean, value: false},
       sync: {type: Array, value: []},
@@ -44,7 +45,7 @@
       "load(data, defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*)",
-      "setData(data.*, setDataUrl, gotData)",
+      "setData(data.*, setDataUrl, gotData, keep)",
       "localLoad(savedData)"
     ],
     localLoad: function(savedData) {
@@ -129,10 +130,10 @@
         return folder
       }
     },
-    setData: function(data, setDataUrl, gotData){
+    setData: function(data, setDataUrl, gotData, keep){
       if (setDataUrl && JSON.stringify(data.base) !== gotData) {
         this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = JSON.stringify(data.base)
+        this.$.set.body = JSON.stringify(this.$,local.dropData(data.base, keep))
         this.$.set.generateRequest()
       }
     },
