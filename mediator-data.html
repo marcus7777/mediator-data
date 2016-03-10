@@ -104,10 +104,10 @@
     },
     load: function (data, defaultData, sync) {
       data = data || defaultData
-      if (JSON.stringify(data) !== JSON.stringify(this.data)) {
-        if (sync.length !== 0) {
-          this.set("data", this.addUniques(data, defaultData, sync))
-        } else {
+      if (sync.length !== 0) {
+        this.set("data", this.addUniques(data, defaultData, sync))
+      } else {
+        if (JSON.stringify(data) !== JSON.stringify(this.data)) {
           this.set("data", data)
         }
       }
