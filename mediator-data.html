@@ -42,7 +42,7 @@
       getUntilData: {value:false, type: Boolean}
     },
     observers: [
-      "load(data, defaultData, sync)",
+      "load(defaultData, sync)",
       "syncAsArray(data.*)",
       "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData, keep)",
@@ -102,8 +102,8 @@
       }
       
     },
-    load: function (data, defaultData, sync) {
-      data = data || defaultData
+    load: function (defaultData, sync) {
+      data = this.data || defaultData
       if (sync.length !== 0) {
         this.set("data", this.addUniques(data, defaultData, sync))
       } else {
@@ -130,13 +130,13 @@
         return folder
       }
     },
-    setData: function(data, setDataUrl, gotData, keep){
-      if (setDataUrl && JSON.stringify(data.base) !== gotData) {
+    setData: function(data, setDataUrl, gotData, keep){ if (setDataUrl && data && gotData && keep) {
+      if (gotData !== JSON.stringify(data.base)) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(this.$.local.dropData(data.base, keep))
         this.$.set.generateRequest()
       }
-    },
+    }},
     getSetDataUrl: function(location, folder) {
       if (location.substring(location.length - 1) === '/') {
         location = location.substring(0,location.length - 1)
