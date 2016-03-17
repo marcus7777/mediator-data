@@ -16,14 +16,12 @@
     "demo.html"
   ],
    "main": [
-    "mediator-data.html",
-	  "mediator-view.html"
+    "mediator-data.html"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
     "firebase-element": "GoogleWebComponents/firebase-element#^1.0.0",
-    "pouch-db": "marcus7777/pouch-db",
-    "clone-data": "marcus7777/clone-data"
+    "iron-localstorage": "PolymerElements/iron-localstorage#~1.0.5"
   },
   "devDependencies": {
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
