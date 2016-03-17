@@ -6,12 +6,12 @@
 @demo badges.demo.html badges
 -->
 
-<dom-module id="mediator-data">
+<dom-module id="mediator-data"><template>
   <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
   <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{value}}"></iron-localstorage>
   <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
   <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
-</dom-module>
+</template></dom-module>
 <script>
 ;(function () {
   function pad(num, size) {
