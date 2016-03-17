@@ -7,15 +7,10 @@
 -->
 
 <dom-module id="mediator-data">
-  <template>
-    <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
-  
-    <pouch-db id="local" name="{{setDataUrl}}" data="{{data}}" drop='["log"]' saved-data="{{savedData}}"></pouch-db>
-    
-    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
-    
-  </template>
+  <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
+  <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{value}}"></iron-localstorage>
+  <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
+  <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
 </dom-module>
 <script>
 ;(function () {
@@ -39,7 +34,8 @@
       editDefault:{type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
-      getUntilData: {value:false, type: Boolean}
+      getUntilData: {value:false, type: Boolean},
+      _hashOfSetDataUrl: {computed:'hash(setDataUrl)'}
     },
     observers: [
       "load(defaultData, sync)",
@@ -133,7 +129,7 @@
     setData: function(data, setDataUrl, gotData, keep){ if (setDataUrl && data && gotData && keep) {
       if (gotData !== JSON.stringify(data.base)) {
         this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = JSON.stringify(this.$.local.dropData(data.base, keep))
+        this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
         this.$.set.generateRequest()
       }
     }},
@@ -196,6 +192,43 @@
         }
       }
       return output
+    },
+    dropData: function(data, drop) {
+      var output = {}
+      if (Array.isArray(drop) && drop.length !== 0 && typeof data === 'object' && data !== null) {
+        Object.keys(data).forEach(function(key) {
+          if (drop.indexOf(key) === -1) { 
+            if (typeof data[key] === 'string') {
+              output[key] = data[key] 
+            } else {
+              output[key] = {}
+              Object.keys(data[key]).forEach(function(key2) {
+                if (drop.indexOf(key2) === -1) { 
+                  output[key][key2] = data[key][key2]
+                }
+              })
+            }
+          }
+        })
+      } else {
+        output = data
+      }
+      return output
+    },
+    hash: function(message) {
+      function hex32(val) {
+        val &= 0xFFFFFFFF
+        var hex = val.toString(16).toUpperCase()
+        return ("00000000" + hex).slice(-8)
+      }
+      var hash = 0
+      if (message.length === 0) return hash
+      for (i = 0;i < message.length;i++) {
+        var char = message.charCodeAt(i)
+        hash = ((hash<<5)-hash)+char
+        hash = hash & hash // Convert to 32bit integer
+      }
+      return hex32(hash)
     }
   })
   function objectToArray(data) {
