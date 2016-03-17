@@ -84,7 +84,9 @@
           this.push(asArray.base.pop())
         }
       } else if (asArray.path === 'asArray' && this.data) {
-        this.set("data",ArrayToObject(asArray.base))
+        if (JSON.stringify(objectToArray(this.data)) !== JSON.stringify(asArray.base)) {
+          this.set("data",ArrayToObject(asArray.base))
+        }
       } else if (asArray.path === "asArray.length") {
         
       }
