@@ -30,7 +30,7 @@
       folder: {type: String},
       data: {notify: true},
       keep:{type: Array, value: ["local"]},
-      asArray: {type: Array, notify: true,value: []},
+      asArray: {type: Array, notify: true},
       editDefault:{type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
