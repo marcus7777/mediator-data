@@ -30,7 +30,7 @@
       folder: {type: String},
       data: {notify: true},
       keep:{type: Array, value: ["local"]},
-      asArray: {notify: true},
+      asArray: {type: Array, notify: true,value: []},
       editDefault:{type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
@@ -50,11 +50,9 @@
       }
     },
     syncAsArray: function(data) {
-      if (data.base) {
-        var asA = objectToArray(data.base)
-        if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
-          this.set("asArray", asA)
-        }
+      var asA = objectToArray(data.base)
+      if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
+        this.set("asArray", asA)
       }
     },
     syncData: function(asArray) {
