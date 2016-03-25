@@ -144,7 +144,7 @@
     push: function(obj){
       var folder = this._folder
       
-      if (this.data) {
+      if (this.data && this.data !== null && this.data !== "null") {
         var num = Object.keys(this.data).length + 1
         var key = pad(num,3)
         
@@ -156,6 +156,7 @@
       } else {
         this.set("data", {"001": obj})
       }
+      return true
     },
     addUniques: function(data, _default, sync) {
       var output = data
