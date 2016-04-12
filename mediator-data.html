@@ -46,7 +46,7 @@
       "localLoad(savedData)"
     ],
     localLoad: function(savedData) {
-      if (!this.data && savedData && Object.keys(savedData).length !== 0) {
+      if (!this.data && savedData && Object.keys(savedData).length !== 0 && savedData !== "null") {
         this.set("data", savedData)
       }
     },
