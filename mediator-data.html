@@ -47,7 +47,7 @@
       "localLoad(savedData)"
     ],
     syncLocal: function(data) {
-      if (!data.base && Object.keys(data.base).length !== 0) {
+      if (!data.base) if (Object.keys(data.base).length !== 0) {
         this.set("savedData", data.base)
       }
     },
