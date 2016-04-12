@@ -41,10 +41,14 @@
     observers: [
       "load(defaultData, sync)",
       "syncAsArray(data.*)",
+      "syncLocal(data.*)",
       "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData, keep, drop)",
       "localLoad(savedData)"
     ],
+    syncLocal: function(data) {
+      this.set("savedData", data.base)
+    },
     localLoad: function(savedData) {
       if (!this.data && savedData && Object.keys(savedData).length !== 0 && savedData !== "null") {
         this.set("data", savedData)
