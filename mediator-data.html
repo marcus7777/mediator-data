@@ -22,10 +22,11 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      dataUrl: {computed:'getDataUrl(location)'},
+      dataUrl: {computed:'getDataUrl(location, token)'},
       setDataUrl: {computed:'getSetDataUrl(location, _folder)'},
       defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
       location: {type: String},
+      token:{type: String,value:""},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true, value: {}},
@@ -108,12 +109,16 @@
       }
       this.gotData = JSON.stringify(data)
     },
-    getDataUrl: function(location){
+    getDataUrl: function(location, token){
       if (location.substring(location.length - 1) === '/') {
         location = location.substring(0,location.length - 1)
       }
       if (location.indexOf("firebase") !== -1 ) {
-        return location + "/.json"
+        if (token === "") {
+          return location + "/.json"
+        } else {
+          return location + "/.json?auth=" + token
+        }
       } else {
         return location
       }
