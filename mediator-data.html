@@ -26,14 +26,14 @@
       setDataUrl: {computed:'getSetDataUrl(location, _folder)'},
       defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
       location: {type: String},
-      token:{type: String,value:""},
+      token: {type: String,value:""},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true, value: {}},
       keep: {type: Array, value: ["local"]},
       drop: {type: Array, value: ["log"]},
       asArray: {type: Array, notify: true},
-      editDefault:{type: Boolean, value: false},
+      editDefault: {type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
@@ -96,7 +96,6 @@
       } else if (asArray.path === "asArray.length") {
         
       }
-      
     },
     load: function (defaultData, sync) {
       data = this.data || defaultData
