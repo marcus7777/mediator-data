@@ -121,13 +121,9 @@
         location = location.substring(0,location.length - 1)
       }
       if (location.indexOf("firebase") !== -1 ) {
-        if (token === "") {
-          return location + "/.json"
-        } else {
-          return location + "/.json"
-        }
+        return location + "/.json" + add
       } else {
-        return location
+        return location + add
       }
     },
     get_folder: function(editDefault, defaultFolder, folder){
