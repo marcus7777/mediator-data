@@ -22,11 +22,12 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      dataUrl: {computed:'getDataUrl(location, token)'},
-      setDataUrl: {computed:'getSetDataUrl(location, _folder)'},
+      dataUrl: {computed:'getDataUrl(location, addToUrl)'},
+      setDataUrl: {computed:'getSetDataUrl(location, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
       location: {type: String},
       token: {type: String,value:""},
+      addToUrl: {computed: "getAddToUrl(token)"},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true, value: {}},
@@ -108,7 +109,14 @@
       }
       this.gotData = JSON.stringify(data)
     },
-    getDataUrl: function(location, token){
+    getAddToUrl: function(token) {
+      if (token !== "") {
+        return "?auth=" + token
+      } else {
+        return ""
+      }
+    },
+    getDataUrl: function(location, add){
       if (location.substring(location.length - 1) === '/') {
         location = location.substring(0,location.length - 1)
       }
@@ -116,7 +124,7 @@
         if (token === "") {
           return location + "/.json"
         } else {
-          return location + "/.json?auth=" + token
+          return location + "/.json"
         }
       } else {
         return location
@@ -137,18 +145,18 @@
         this.$.set.generateRequest()
       }
     }},
-    getSetDataUrl: function(location, folder) {
+    getSetDataUrl: function(location, folder, add) {
       if (location.substring(location.length - 1) === '/') {
         location = location.substring(0,location.length - 1)
       }
       if (location.indexOf("firebase")) {
         if (folder === '') {
-          return location + "/.json"
+          return location + "/.json" + add
         } else {
-          return location + "/" + folder + "/.json"
+          return location + "/" + folder + "/.json" + add
         }
       } else {
-        return location + "/" + folder
+        return location + "/" + folder + add
       }
     },
     push: function(obj){
