@@ -38,7 +38,7 @@
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
-      _hashOfSetDataUrl: {computed:'hash(setDataUrl)'}
+      _hashOfSetDataUrl: {computed:'hash(location,folder)'}
     },
     observers: [
       "load(defaultData, sync)",
@@ -224,13 +224,14 @@
       }
       return output
     },
-    hash: function(message) {
+    hash: function(a,b) {
       function hex32(val) {
         val &= 0xFFFFFFFF
         var hex = val.toString(16).toUpperCase()
         return ("00000000" + hex).slice(-8)
       }
       var hash = 0
+      var message = a+b
       if (message.length === 0) return hash
       for (i = 0;i < message.length;i++) {
         var char = message.charCodeAt(i)
