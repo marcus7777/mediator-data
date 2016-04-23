@@ -43,14 +43,18 @@
     observers: [
       "load(defaultData, sync)",
       "syncAsArray(data.*)",
-      "syncLocal(data.*)",
+      "syncLocal(data.*, savedData, drop)",
       "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData, keep, drop)",
       "localLoad(savedData)"
     ],
-    syncLocal: function(data) {
-      if (data.base) if (Object.keys(data.base).length !== 0) if (data.base !== null) if (data.base !== "null") {
-        this.set("savedData", data.base)
+    syncLocal: function(data, savedData, drop) {
+      if (data.base && savedData) 
+      if (Object.keys(data.base).length !== 0)
+      if (data.base !== null && savedData !== null)
+      if (data.base !== "null" && savedData !== "null")
+      if (JSON.stringify(data.base) !== JSON.stringify(savedData)) {
+        this.set("savedData",JSON.stringify(this.dropData(data.base, drop)))
       }
     },
     localLoad: function(savedData) {
@@ -134,7 +138,6 @@
       }
     },
     setData: function(data, setDataUrl, gotData, keep, drop){ if (setDataUrl && data && gotData && keep && drop) {
-      this.set("savedData",JSON.stringify(this.dropData(data.base, drop)))
       if (gotData !== JSON.stringify(data.base) && data.base !== null) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
