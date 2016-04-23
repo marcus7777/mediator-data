@@ -7,7 +7,7 @@
 -->
 
 <dom-module id="mediator-data"><template>
-  <iron-ajax auto url="{{setDataUrl}}" last-response="{{data}}"></iron-ajax>
+  <iron-ajax auto url="{{setDataUrl}}" last-response="{{_data}}"></iron-ajax>
   <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
   <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
   <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
@@ -46,8 +46,17 @@
       "syncLocal(data.*, savedData, drop)",
       "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData, keep, drop)",
-      "localLoad(savedData)"
+      "localLoad(savedData)",
+      "ajaxData(_data.*)"
     ],
+    ajaxData: function(data) {
+      if (data.base) 
+      if (Object.keys(data.base).length !== 0)
+      if (data.base !== null)
+      if (data.base !== "null") {
+        this.set("data",data.base)
+      }
+    },
     syncLocal: function(data, savedData, drop) {
       if (data.base && savedData) 
       if (Object.keys(data.base).length !== 0)
@@ -58,7 +67,7 @@
       }
     },
     localLoad: function(savedData) {
-      if (!this.data && savedData && Object.keys(savedData).length !== 0 && savedData !== "null") {
+      if ((!this.data || Object.keys(this.data).length === 0) && savedData && Object.keys(savedData).length !== 0 && savedData !== "null") {
         this.set("data", savedData)
       }
     },
