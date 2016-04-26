@@ -25,7 +25,7 @@
       dataUrl: {computed:'getDataUrl(location, addToUrl)'},
       setDataUrl: {computed:'getSetDataUrl(location, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
-      location: {type: String},
+      url: {type: String},
       token: {type: String,value:""},
       addToUrl: {computed: "getAddToUrl(token)"},
       defaultFolder: {type: String, value: 'default'},
@@ -38,7 +38,7 @@
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
-      _hashOfSetDataUrl: {computed:'hash(location,folder)'}
+      _hashOfSetDataUrl: {computed:'hash(url,folder)'}
     },
     observers: [
       "load(defaultData, sync)",
