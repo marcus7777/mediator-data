@@ -22,9 +22,9 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      dataUrl: {computed:'getDataUrl(location, addToUrl)'},
-      setDataUrl: {computed:'getSetDataUrl(location, _folder, addToUrl)'},
-      defaultDataUrl: {computed:'getSetDataUrl(location, defaultFolder)'},
+      dataUrl: {computed:'getDataUrl(url, addToUrl)'},
+      setDataUrl: {computed:'getSetDataUrl(url, _folder, addToUrl)'},
+      defaultDataUrl: {computed:'getSetDataUrl(url, defaultFolder)'},
       url: {type: String},
       token: {type: String,value:""},
       addToUrl: {computed: "getAddToUrl(token)"},
