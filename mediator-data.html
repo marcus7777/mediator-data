@@ -6,12 +6,14 @@
 @demo badges.demo.html badges
 -->
 
-<dom-module id="mediator-data"><template>
-  <iron-ajax auto url="{{setDataUrl}}" last-response="{{_data}}"></iron-ajax>
-  <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
-  <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
-  <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
-</template></dom-module>
+<dom-module id="mediator-data">
+  <template>
+    <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
+    <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
+    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
+    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
+  </template>
+</dom-module>
 <script>
 ;(function () {
   function pad(num, size) {
@@ -22,7 +24,7 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      setDataUrl: {computed:'getSetDataUrl(url, _folder, addToUrl)'},
+      dataUrl: {computed:'getDataUrl(url, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getSetDataUrl(url, defaultFolder, addToUrl)'},
       url: {type: String},
       token: {type: String,value:""},
@@ -45,7 +47,7 @@
       "syncLocal(data.*, savedData, drop)",
       "syncData(asArray.*)",
       "setData(data.*, setDataUrl, gotData, keep, drop)",
-      "localLoad(savedData)",
+      "localLoad(savedData.*)",
       "ajaxData(_data.*)"
     ],
     ajaxData: function(data) {
@@ -66,8 +68,10 @@
       }
     },
     localLoad: function(savedData) {
-      if ((!this.data || Object.keys(this.data).length === 0) && savedData && Object.keys(savedData).length !== 0 && savedData !== "null") {
-        this.set("data", savedData)
+      if (!this.data || Object.keys(this.data).length === 0)
+      if (savedData.base && Object.keys(savedData.base).length !== 0)
+      if (savedData.base !== "null") {
+        this.set("data", savedData.base)
       }
     },
     syncAsArray: function(data) {
@@ -135,34 +139,32 @@
         return folder
       }
     },
-    setData: function(data, setDataUrl, gotData, keep, drop){ if (setDataUrl && data && gotData && keep && drop) {
+    setData: function(data, dataUrl, gotData, keep, drop){ if (dataUrl && data && gotData && keep && drop) {
       if (gotData !== JSON.stringify(data.base) && data.base !== null) {
         this.$.set.headers = {'content-type':'application/json'}
         this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
         this.$.set.generateRequest()
       }
     }},
-    getSetDataUrl: function(location, folder, add) { if (folder === '') {
-      if (location.substring(location.length - 1) === '/') {
-        location = location.substring(0,location.length - 1)
+    getDataUrl: function(url, folder, add) { if (folder === '') {
+      if (url.substring(url.length - 1) === '/') {
+        var locationUrl = url.substring(0,location.length - 1)
       }
-      if (location.indexOf("firebase")) {
-        return location + "/" + folder + "/.json" + add
+      if (locationUrl.indexOf("firebase")) {
+        return locationUrl + "/" + folder + "/.json" + add
       } else {
-        return location + "/" + folder + add
+        return locationUrl + "/" + folder + add
       }
     }},
     push: function(obj){
       var folder = this._folder
-      
       if (this.data && this.data !== null && this.data !== "null") {
         var num = Object.keys(this.data).length + 1
-        var key = pad(num,3)
-        
+        var key = pad(num, 3)
         if (!this.data.hasOwnProperty(key)) {
           this.set("data."+key, obj)
         } else {
-          this.set("data."+key+"-"+pad(Math.floor(Math.random()*10000),4), obj)
+          this.set("data."+key+"-"+pad(Math.floor(Math.random()*10000), 4), obj)
         }
       } else {
         this.set("data", {"001": obj})
