@@ -7,7 +7,7 @@
 -->
 
 <dom-module id="mediator-data"><template>
-  <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
+  <iron-ajax auto url="{{setDataUrl}}" last-response="{{_data}}"></iron-ajax>
   <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
   <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
   <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
@@ -22,7 +22,6 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      dataUrl: {computed:'getDataUrl(url, _folder, addToUrl)'},
       setDataUrl: {computed:'getSetDataUrl(url, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getSetDataUrl(url, defaultFolder)'},
       url: {type: String},
@@ -129,16 +128,6 @@
         return ""
       }
     },
-    getDataUrl: function(url, folder, add){ if (url && folder) {
-      if (url.substring(url.length - 1) === '/') {
-        url = url.substring(0,url.length - 1)
-      }
-      if (url.indexOf("firebase") !== -1 ) {
-        return url + "/" + folder + "/.json" + add
-      } else {
-        return url + "/" + folder + add
-      }
-    }},
     get_folder: function(editDefault, defaultFolder, folder){
       if (editDefault) {
         return defaultFolder
