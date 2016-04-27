@@ -22,7 +22,7 @@
   Polymer({
     is: 'mediator-data',
     properties: {
-      dataUrl: {computed:'getDataUrl(url, addToUrl)'},
+      dataUrl: {computed:'getDataUrl(url, _folder, addToUrl)'},
       setDataUrl: {computed:'getSetDataUrl(url, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getSetDataUrl(url, defaultFolder)'},
       url: {type: String},
@@ -129,16 +129,16 @@
         return ""
       }
     },
-    getDataUrl: function(url, add){
+    getDataUrl: function(url, folder, add){ if (url && folder) {
       if (url.substring(url.length - 1) === '/') {
         url = url.substring(0,url.length - 1)
       }
       if (url.indexOf("firebase") !== -1 ) {
-        return url + "/.json" + add
+        return url + "/" + folder + "/.json" + add
       } else {
-        return url + add
+        return url + "/" + folder + add
       }
-    },
+    }},
     get_folder: function(editDefault, defaultFolder, folder){
       if (editDefault) {
         return defaultFolder
@@ -153,16 +153,12 @@
         this.$.set.generateRequest()
       }
     }},
-    getSetDataUrl: function(location, folder, add) {
+    getSetDataUrl: function(location, folder, add) { if (folder === '') {
       if (location.substring(location.length - 1) === '/') {
         location = location.substring(0,location.length - 1)
       }
       if (location.indexOf("firebase")) {
-        if (folder === '') {
-          return location + "/.json" + add
-        } else {
-          return location + "/" + folder + "/.json" + add
-        }
+        return location + "/" + folder + "/.json" + add
       } else {
         return location + "/" + folder + add
       }
