@@ -25,7 +25,7 @@
     is: 'mediator-data',
     properties: {
       dataUrl: {computed:'getDataUrl(url, _folder, addToUrl)'},
-      defaultDataUrl: {computed:'getSetDataUrl(url, defaultFolder, addToUrl)'},
+      defaultDataUrl: {computed:'getDataUrl(url, defaultFolder, addToUrl)'},
       url: {type: String},
       token: {type: String,value:""},
       addToUrl: {computed: "getAddToUrl(token)"},
