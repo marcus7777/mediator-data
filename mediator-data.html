@@ -149,7 +149,7 @@
       }
     },
     getDataUrl: function(url, folder, add) {
-      if (folder === '') {
+      if (folder !== '') {
         if (url.substring(url.length - 1) === '/') {
           var locationUrl = url.substring(0,location.length - 1)
         }
