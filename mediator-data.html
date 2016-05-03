@@ -151,12 +151,12 @@
     getDataUrl: function(url, folder, add) {
       if (folder !== '') {
         if (url.substring(url.length - 1) === '/') {
-          var locationUrl = url.substring(0,location.length - 1)
+          var url = url.substring(0,location.length - 1)
         }
-        if (locationUrl.indexOf("firebase")) {
-          return locationUrl + "/" + folder + "/.json" + add
+        if (url.indexOf("firebase")) {
+          return url + "/" + folder + "/.json" + add
         } else {
-          return locationUrl + "/" + folder + add
+          return url + "/" + folder + add
         }
       } 
     },
