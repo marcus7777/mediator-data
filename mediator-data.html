@@ -139,23 +139,27 @@
         return folder
       }
     },
-    setData: function(data, dataUrl, gotData, keep, drop){ if (dataUrl && data && gotData && keep && drop) {
-      if (gotData !== JSON.stringify(data.base) && data.base !== null) {
-        this.$.set.headers = {'content-type':'application/json'}
-        this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
-        this.$.set.generateRequest()
+    setData: function(data, dataUrl, gotData, keep, drop){
+      if (dataUrl && data && gotData && keep && drop) {
+        if (gotData !== JSON.stringify(data.base) && data.base !== null) {
+          this.$.set.headers = {'content-type':'application/json'}
+          this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
+          this.$.set.generateRequest()
+        }
       }
-    }},
-    getDataUrl: function(url, folder, add) { if (folder === '') {
-      if (url.substring(url.length - 1) === '/') {
-        var locationUrl = url.substring(0,location.length - 1)
-      }
-      if (locationUrl.indexOf("firebase")) {
-        return locationUrl + "/" + folder + "/.json" + add
-      } else {
-        return locationUrl + "/" + folder + add
-      }
-    }},
+    },
+    getDataUrl: function(url, folder, add) {
+      if (folder === '') {
+        if (url.substring(url.length - 1) === '/') {
+          var locationUrl = url.substring(0,location.length - 1)
+        }
+        if (locationUrl.indexOf("firebase")) {
+          return locationUrl + "/" + folder + "/.json" + add
+        } else {
+          return locationUrl + "/" + folder + add
+        }
+      } 
+    },
     push: function(obj){
       var folder = this._folder
       if (this.data && this.data !== null && this.data !== "null") {
