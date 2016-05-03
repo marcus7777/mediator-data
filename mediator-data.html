@@ -151,7 +151,7 @@
     getDataUrl: function(url, folder, add) {
       if (folder !== '') {
         if (url.substring(url.length - 1) === '/') {
-          var url = url.substring(0,location.length - 1)
+          var url = url.substring(0, url.length - 1)
         }
         if (url.indexOf("firebase")) {
           return url + "/" + folder + "/.json" + add
