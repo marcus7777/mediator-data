@@ -10,7 +10,7 @@
   <template>
     <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
-    <iron-ajax id="set" method="PUT" url="{{setDataUrl}}" ></iron-ajax>
+    <iron-ajax id="set" method="PUT" url="{{dataUrl}}" ></iron-ajax>
     <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
   </template>
 </dom-module>
@@ -28,7 +28,7 @@
       defaultDataUrl: {computed:'getDataUrl(url, defaultFolder, addToUrl)'},
       url: {type: String},
       token: {type: String,value:""},
-      addToUrl: {computed: "getAddToUrl(token)"},
+      addToUrl: {computed: "getAddToUrl(token)", value: ""},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true, value: {}},
