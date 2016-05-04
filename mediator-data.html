@@ -10,7 +10,9 @@
   <template>
     <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
-    <iron-ajax id="set" method="PUT" url="{{dataUrl}}" ></iron-ajax>
+    <template is="dom-if" if="{{!notPut}}">
+      <iron-ajax id="set" method="PUT" url="{{dataUrl}}" ></iron-ajax>
+    </template>
     <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
   </template>
 </dom-module>
@@ -24,6 +26,7 @@
   Polymer({
     is: 'mediator-data',
     properties: {
+      notPut: {type: Boolean, value: false},
       dataUrl: {computed:'getDataUrl(url, _folder, addToUrl)'},
       defaultDataUrl: {computed:'getDataUrl(url, defaultFolder, addToUrl)'},
       url: {type: String},
@@ -46,7 +49,7 @@
       "syncAsArray(data.*)",
       "syncLocal(data.*, savedData, drop)",
       "syncData(asArray.*)",
-      "setData(data.*, setDataUrl, gotData, keep, drop)",
+      "setData(data.*, setDataUrl, gotData, keep, drop, notPut)",
       "localLoad(savedData.*)",
       "ajaxData(_data.*)"
     ],
@@ -139,8 +142,8 @@
         return folder
       }
     },
-    setData: function(data, dataUrl, gotData, keep, drop){
-      if (dataUrl && data && gotData && keep && drop) {
+    setData: function(data, dataUrl, gotData, keep, drop, notPut){
+      if (dataUrl && data && gotData && keep && drop && !notPut) {
         if (gotData !== JSON.stringify(data.base) && data.base !== null) {
           this.$.set.headers = {'content-type':'application/json'}
           this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
