@@ -109,14 +109,22 @@
         }
       } else if (asArray.path === 'asArray' && this.data) {
         if (JSON.stringify(objectToArray(this.data)) !== JSON.stringify(asArray.base) || this.data === null || Object.keys(this.data).length !== asArray.base.length) {
-          this.set("data",ArrayToObject(asArray.base))
+          this.set("data", ArrayToObject(asArray.base))
         }
       } else if (asArray.path === "asArray.length") {
         
       }
     },
     load: function (defaultData, sync) {
-      data = this.data || defaultData
+      if (this.data) 
+      if (Object.keys(this.data).length !== 0)
+      if (this.data !== null)
+      if (this.data !== "null") {
+        data = this.data
+      } else {
+        data = this.data
+      }
+      
       if (sync.length !== 0) {
         this.set("data", this.addUniques(data, defaultData, sync))
       } else {
