@@ -9,9 +9,7 @@
     <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{dataUrl}}" ></iron-ajax>
-    <template is="dom-if" if="{{defaultFolder}}">
-      <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
-    </template>
+    <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
   </template>
 </dom-module>
 <script>
