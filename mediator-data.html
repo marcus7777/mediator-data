@@ -59,10 +59,10 @@
       }
     },
     syncLocal: function(data, savedData, drop) {
-      if (data.base && savedData) 
+      if (data.base) 
       if (Object.keys(data.base).length !== 0)
-      if (data.base !== null && savedData !== null)
-      if (data.base !== "null" && savedData !== "null")
+      if (data.base !== null)
+      if (data.base !== "null")
       if (JSON.stringify(data.base) !== JSON.stringify(savedData)) {
         this.set("savedData",this.dropData(data.base, drop))
       }
