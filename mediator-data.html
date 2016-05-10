@@ -97,15 +97,15 @@
           console.log("del it todo")
         }
       } else if (asArray.path === 'asArray.splices') {
-        if (asArray.value.keySplices[0].added.length === 0) {
-          var copyTo = {}
-          for (var index = 0; index < asArray.base.length; index++) {
-            copyTo[pad(index,3)] = asArray.base[index]
-          }
-          this.set("data", copyTo)
-        } else {
+        //if (asArray.value.keySplices[0].added.length === 0) {
+        //  var copyTo = {}
+        //  for (var index = 0; index < asArray.base.length; index++) {
+        //    copyTo[pad(index,3)] = asArray.base[index]
+        //  }
+        //  this.set("data", copyTo)
+        //} else {
           this.push(asArray.base.pop())
-        }
+        //}
       } else if (asArray.path === 'asArray' && this.data) {
         if (JSON.stringify(objectToArray(this.data)) !== JSON.stringify(asArray.base) || this.data === null || Object.keys(this.data).length !== asArray.base.length) {
           this.set("data", ArrayToObject(asArray.base))
