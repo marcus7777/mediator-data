@@ -46,7 +46,7 @@
       "syncAsArray(data.*)",
       "syncLocal(data.*, savedData, drop)",
       "syncData(asArray.*)",
-      "setData(data.*, dataUrl, gotData, keep, drop, noPut)",
+      "setData(data.*, dataUrl, gotData, keep, drop, noPut, defaultData)",
       "localLoad(savedData.*)",
       "ajaxData(_data.*)"
     ],
@@ -144,12 +144,14 @@
         return folder
       }
     },
-    setData: function(data, dataUrl, gotData, keep, drop, noPut){
-      if (dataUrl && data && gotData && keep && drop && !noPut) {
-        if (gotData !== JSON.stringify(data.base) && data.base !== null) {
-          this.$.set.headers = {'content-type':'application/json'}
-          this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
-          this.$.set.generateRequest()
+    setData: function(data, dataUrl, gotData, keep, drop, noPut, defaultData){
+      if (dataUrl && data && gotData && keep && drop && !noPut && defaultData) { //  have we got all the data we need
+        if (JSON.stringify(data.base) !== JSON.stringify(defaultData)) { //  has it changed since the default data
+          if (gotData !== JSON.stringify(data.base) && data.base !== null) { //  has the data changed since we last got it
+            this.$.set.headers = {'content-type':'application/json'} 
+            this.$.set.body = JSON.stringify(this.dropData(data.base, keep))
+            this.$.set.generateRequest()
+          }
         }
       }
     },
