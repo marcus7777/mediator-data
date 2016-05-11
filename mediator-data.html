@@ -221,11 +221,13 @@
               output[key] = data[key] 
             } else {
               output[key] = {}
-              Object.keys(data[key]).forEach(function(key2) {
-                if (drop.indexOf(key2) === -1) { 
-                  output[key][key2] = data[key][key2]
-                }
-              })
+              if (data[key] !== null) {
+                Object.keys(data[key]).forEach(function(key2) {
+                  if (drop.indexOf(key2) === -1) { 
+                    output[key][key2] = data[key][key2]
+                  }
+                })
+              }
             }
           }
         })
