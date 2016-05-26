@@ -27,7 +27,8 @@
       defaultDataUrl: {computed:'getDataUrl(url, defaultFolder, addToUrl)'},
       url: {type: String},
       token: {type: String,value:""},
-      addToUrl: {computed: "getAddToUrl(token)", value: ""},
+      addToUrl: {computed: "getAddToUrl(token, authVariable)", value: ""},
+      authVariable:{type:String, value: "access_token"},
       defaultFolder: {type: String, value: 'default'},
       folder: {type: String},
       data: {notify: true, value: {}},
@@ -130,9 +131,9 @@
       }
       this.gotData = JSON.stringify(data)
     },
-    getAddToUrl: function(token) {
+    getAddToUrl: function(token, authVariable) {
       if (token !== "") {
-        return "?auth=" + token
+        return "?" + authVariable + "=" + token
       } else {
         return ""
       }
