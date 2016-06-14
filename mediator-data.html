@@ -6,7 +6,7 @@
 
 <dom-module id="mediator-data">
   <template>
-    <iron-localstorage name="{{_localstorageName}}" value="{{savedData}}"></iron-localstorage>
+    <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
     <iron-ajax id="set" method="PUT" url="{{dataUrl}}" ></iron-ajax>
     <iron-ajax auto url="{{defaultDataUrl}}" last-response="{{defaultData}}"></iron-ajax>
@@ -41,8 +41,6 @@
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
       _hashOfSetDataUrl: {computed:'hash(url,folder)'},
-      name:{type:String, value: ""},
-      _localstorageName: {computed:'getLocalstorageName(name,_hashOfSetDataUrl)'}
     },
     observers: [
       "load(defaultData, sync)",
@@ -53,13 +51,6 @@
       "localLoad(savedData.*)",
       "ajaxData(_data.*)"
     ],
-    getLocalstorageName: function(name, hashOfSetDataUrl){
-      if (name) {
-        return name
-      } else {
-        return hashOfSetDataUrl
-      }
-    },
     ajaxData: function(data) {
       if (data.base) 
       if (Object.keys(data.base).length !== 0)
