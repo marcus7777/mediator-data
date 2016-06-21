@@ -69,9 +69,11 @@
       }
     },
     localLoad: function(savedData) {
+      if (!this.localLoaded)
       if (!this.data || Object.keys(this.data).length === 0)
       if (savedData.base && Object.keys(savedData.base).length !== 0)
       if (savedData.base !== "null") {
+        this.localLoaded = true
         this.set("data", savedData.base)
       }
     },
