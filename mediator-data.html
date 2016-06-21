@@ -64,7 +64,7 @@
       if (Object.keys(data.base).length !== 0)
       if (data.base !== null)
       if (data.base !== "null")
-      if (JSON.stringify(data.base) !== JSON.stringify(savedData)) {
+      if (JSON.stringify(this.dropData(data.base, drop)) !== JSON.stringify(savedData)) {
         this.set("savedData",this.dropData(data.base, drop))
       }
     },
