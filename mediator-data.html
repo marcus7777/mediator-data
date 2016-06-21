@@ -30,7 +30,7 @@
       addToUrl: {computed: "getAddToUrl(token, authVariable)", value: ""},
       authVariable:{type:String, value: "access_token"},
       defaultFolder: {type: String, value: 'default'},
-      folder: {type: String},
+      folder: {type: String, value:""},
       data: {notify: true, value: {}},
       gotData:{type:String, value: "{}"},
       keep: {type: Array, value: ["local"]},
@@ -40,7 +40,7 @@
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
-      _hashOfSetDataUrl: {computed:'hash(url,folder)'},
+      _hashOfSetDataUrl: {computed:'hash(url,folder)'}
     },
     observers: [
       "load(defaultData, sync)",
@@ -141,10 +141,12 @@
       }
     },
     get_folder: function(editDefault, defaultFolder, folder){
-      if (editDefault) {
-        return defaultFolder
-      } else {
-        return folder
+      if (folder) {
+        if (editDefault) {
+          return defaultFolder
+        } else {
+          return folder
+        }
       }
     },
     setData: function(data, dataUrl, gotData, keep, drop, noPut, defaultData){
