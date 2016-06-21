@@ -40,7 +40,7 @@
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
       getUntilData: {value:false, type: Boolean},
-      _hashOfSetDataUrl: {computed:'hash(url,folder)'}
+      _hashOfSetDataUrl: {computed:'hash(url,_folder)'}
     },
     observers: [
       "load(defaultData, sync)",
