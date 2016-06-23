@@ -80,9 +80,14 @@
       }
     },
     syncAsArray: function(data) {
-      var asA = objectToArray(data.base)
-      if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
-        this.set("asArray", asA)
+      if (data.base) 
+      if (Object.keys(data.base).length !== 0)
+      if (data.base !== null)
+      if (data.base !== "null") { 
+        var asA = objectToArray(data.base)
+        if (JSON.stringify(this.asArray) !== JSON.stringify(asA)) {
+          this.set("asArray", asA)
+        }
       }
     },
     syncData: function(asArray) {
