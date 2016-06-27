@@ -40,6 +40,8 @@
       editDefault: {type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
+      local: {type: Boolean, value: true},
+      useLocalStorage : {computed:'getUseLocalStorage(_folder, local)'},
       getUntilData: {value:false, type: Boolean},
       _hashOfSetDataUrl: {computed:'hash(url,_folder)'}
     },
@@ -52,6 +54,9 @@
       "localLoad(savedData.*)",
       "ajaxData(_data.*)"
     ],
+    getUseLocalStorage: function(_folder, local) {
+      return (_folder && local)
+    },
     ajaxData: function(data) {
       if (data.base) 
       if (Object.keys(data.base).length !== 0)
