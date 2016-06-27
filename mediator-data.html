@@ -40,7 +40,7 @@
       editDefault: {type: Boolean, value: false},
       sync: {type: Array, value: []},
       _folder: {computed:'get_folder(editDefault, defaultFolder, folder)'},
-      local: {type: Boolean, value: true},
+      local: {type: Boolean, value: false},
       useLocalStorage : {computed:'getUseLocalStorage(_folder, local)'},
       getUntilData: {value:false, type: Boolean},
       _hashOfSetDataUrl: {computed:'hash(url,_folder)'}
