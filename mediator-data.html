@@ -6,7 +6,7 @@
 
 <dom-module id="mediator-data">
   <template>
-    <template is="dom-if" if="{{_folder}}">
+    <template is="dom-if" if="{{useLocalStorage}}">
       <iron-localstorage name="{{_hashOfSetDataUrl}}" value="{{savedData}}"></iron-localstorage>
     </template>
     <iron-ajax auto url="{{dataUrl}}" last-response="{{_data}}"></iron-ajax>
